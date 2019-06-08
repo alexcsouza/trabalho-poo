@@ -6,10 +6,10 @@
  */
 
 #include <cstdlib>
-
-using namespace std;
+#include <iostream>
 
 int main(int argc, char** argv) {
+    std::cout << "teste" << std::endl;
     
     return 0;
 }
