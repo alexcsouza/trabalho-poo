@@ -29,6 +29,9 @@ class Graph{
         void complete();
         void bfs(const Vertex &vertex) const;
         void dfs(const Vertex &vertex) const;
+
+        void printAdjacencyMatrix() const;
+
         ~Graph();
 
         void init();

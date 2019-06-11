@@ -15,8 +15,6 @@ int Edge::getV2() const{
 }
 
 Edge::~Edge(){
-    delete &v1;
-    delete &v2;
 }
 
 #endif

@@ -18,18 +18,11 @@ int Graph::totalEdges = 0;
 
 Graph::Graph(int &nv) :
     numeroDeVerticesX(nv), numeroDeVerticesY(nv){
-         //int *n = numeroDeVertices; 
-         //adjacencyMatrix = new int[numeroDeVerticesX][numeroDeVerticesY];
-    //adjacencyMatrix(new int[numeroDeVertices * numeroDeVertices]){
-        
-        adjacencyMatrix = new int*[numeroDeVerticesX];
-        for(int i = 0 ; i < numeroDeVerticesX ; i++){
-            //for(int j = 0 ; j < numeroDeVerticesX ; j++){
-                adjacencyMatrix[i] = new int[numeroDeVerticesX];
-            //}
-        }
-        
-};
+    adjacencyMatrix = new int*[numeroDeVerticesX];
+    for(int i = 0 ; i < numeroDeVerticesX ; i++){
+        adjacencyMatrix[i] = new int[numeroDeVerticesX];
+    }
+}
 
 bool Graph::insert(const Edge &edge){
     if(edge.getV1() == edge.getV2() 
@@ -68,6 +61,19 @@ void Graph::bfs(const Vertex &edge) const{
 void Graph::dfs(const Vertex &edge) const{
 
 };
+
+/**
+ * Método útil para impressão da matriz de adjacência em tela.
+ */
+void Graph::printAdjacencyMatrix() const{
+    for(int i = 0 ; i < numeroDeVerticesX ; i++){
+        std::cout << std::endl;
+        for(int j = 0 ; j < numeroDeVerticesX ; j++){
+            std::cout << adjacencyMatrix[i][j] << " ";
+        }
+    }
+    std::cout << std::endl;
+}
     
 Graph::~Graph(){
 
