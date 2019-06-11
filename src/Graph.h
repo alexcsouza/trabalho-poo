@@ -2,8 +2,8 @@
 #define GRAPH_H
 
 #include <iostream>
-#include <Edge.h>
-#include <Vertex.h>
+#include "Edge.h"
+#include "Vertex.h"
 
 /**
  * Classe que representa um grafo referente à tarefa:
@@ -14,19 +14,20 @@
  */
 class Graph{
     private:
-        int numeroDeVertices;
-        Vertex *adjacencyMatrix[][];
-        static int totalEdges;
+        const int numeroDeVertices;
+        int **adjacencyMatrix;
+        
     public:
-        Graph(int numeroDeVertices);
-        bool insert(const Edge&);
-        bool remove(const Edge&);
+        static int totalEdges;
+        Graph(int &numeroDeVertices);
+        bool insert(const Edge &edge);
+        bool remove(const Edge &edge);
         int getTotalEdges();
-        bool edge(const Edge&) const;
+        bool edge(const Edge &edge) const;
         bool isComplete();
         void complete();
-        void bfs(const Vertex&) const;
-        void dfs(const Vertex&) const;
+        void bfs(const Vertex &vertex) const;
+        void dfs(const Vertex &vertex) const;
         ~Graph();
 
         void init();

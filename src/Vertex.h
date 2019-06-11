@@ -4,8 +4,8 @@
 #include <iostream>
 
 class Vertex{
-    
-      
+    private:
+        
 };
 
 #endif

@@ -2,9 +2,9 @@
 #define GRAPH_CPP
 
 #include <iostream>
-#include <Graph.h>
-#include <Edge.h>
-#include <Vertex.h>
+#include "Graph.h"
+#include "Edge.h"
+#include "Vertex.h"
 
 /**
  * Classe que representa um grafo referente à tarefa:
@@ -13,13 +13,31 @@
  * vértices). A classe Graph utilizará uma representação interna por matriz de adjacência."
  * 
  */
-Graph::Graph(int numeroDeVertices):numeroDeVertices(numeroDeVertices){};
 
-bool Graph::insert(const Edge&){
-    return false;
+int Graph::totalEdges = 0;
+
+Graph::Graph(int &numeroDeVertices) :
+    numeroDeVertices(numeroDeVertices){ 
+    //adjacencyMatrix(new int[numeroDeVertices * numeroDeVertices]){
+        adjacencyMatrix[numeroDeVertices][numeroDeVertices];
+        for(int i = 0 ; i < numeroDeVertices ; i++){
+            for(int j = 0 ; j < numeroDeVertices ; j++){
+                adjacencyMatrix[i] = {0};
+            }
+        }
+};
+
+bool Graph::insert(const Edge &edge){
+    if(edge.getV1() == edge.getV2() 
+        || adjacencyMatrix[edge.getV1()][edge.getV2()] == 1){
+        return false;
+    }
+    adjacencyMatrix[edge.getV1()][edge.getV2()] = 1;
+    Graph::totalEdges++;
+    return true;
 }
         
-bool Graph::remove(const Edge&){
+bool Graph::remove(const Edge &edge){
     return false;
 }
 
@@ -27,7 +45,7 @@ int Graph::getTotalEdges(){
     return 0;
 };
 
-bool Graph::edge(const Edge&) const{
+bool Graph::edge(const Edge &edge) const{
     return false;
 };
 
@@ -39,11 +57,11 @@ void Graph::complete(){
 
 };
 
-void Graph::bfs(const Vertex&) const{
+void Graph::bfs(const Vertex &edge) const{
 
 };
   
-void Graph::dfs(const Vertex&) const{
+void Graph::dfs(const Vertex &edge) const{
 
 };
     

@@ -4,8 +4,14 @@
 #include <iostream>
 
 class Edge{
-    
-      
+    private:
+        int v1;
+        int v2;
+    public: 
+        Edge(int &v1, int &v2);
+        int getV1() const;
+        int getV2() const;
+        ~Edge();
 };
 
 #endif
