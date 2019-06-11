@@ -14,7 +14,8 @@
  */
 class Graph{
     private:
-        const int numeroDeVertices;
+        const int numeroDeVerticesX;
+        const int numeroDeVerticesY;
         int **adjacencyMatrix;
         
     public:

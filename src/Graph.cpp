@@ -16,15 +16,19 @@
 
 int Graph::totalEdges = 0;
 
-Graph::Graph(int &numeroDeVertices) :
-    numeroDeVertices(numeroDeVertices){ 
+Graph::Graph(int &nv) :
+    numeroDeVerticesX(nv), numeroDeVerticesY(nv){
+         //int *n = numeroDeVertices; 
+         //adjacencyMatrix = new int[numeroDeVerticesX][numeroDeVerticesY];
     //adjacencyMatrix(new int[numeroDeVertices * numeroDeVertices]){
-        adjacencyMatrix[numeroDeVertices][numeroDeVertices];
-        for(int i = 0 ; i < numeroDeVertices ; i++){
-            for(int j = 0 ; j < numeroDeVertices ; j++){
-                adjacencyMatrix[i] = {0};
-            }
+        
+        adjacencyMatrix = new int*[numeroDeVerticesX];
+        for(int i = 0 ; i < numeroDeVerticesX ; i++){
+            //for(int j = 0 ; j < numeroDeVerticesX ; j++){
+                adjacencyMatrix[i] = new int[numeroDeVerticesX];
+            //}
         }
+        
 };
 
 bool Graph::insert(const Edge &edge){

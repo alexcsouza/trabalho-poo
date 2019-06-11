@@ -2,6 +2,7 @@
 #define EDGE_H
 
 #include <iostream>
+#include "Edge.h"
 
 class Edge{
     private:
