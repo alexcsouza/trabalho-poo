@@ -22,7 +22,8 @@ class Graph{
         Graph(int &numeroDeVertices);
         bool insert(const Edge &edge);
         bool remove(const Edge &edge);
-        static int getTotalEdges();
+        static int getTotalArestas();
+        static int getTotalVertices();
         bool edge(const Edge &edge) const;
         bool isComplete();
         void complete();

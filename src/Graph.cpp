@@ -24,36 +24,42 @@ Graph::Graph(int &nv) :
     }
 }
 
-bool Graph::insert(const Edge &edge){
-    if( edge.getV1() >= numeroDeVertices
-        || edge.getV1() >= numeroDeVertices
-        || edge.getV1() == edge.getV2()  
-        || adjacencyMatrix[edge.getV1()][edge.getV2()] == 1){
+bool Graph::insert(const Edge &e){
+    if(e.getV1() >= numeroDeVertices
+        || e.getV1() >= numeroDeVertices
+        || e.getV1() == e.getV2() 
+        || edge(e)){
         return false;
     }
-    adjacencyMatrix[edge.getV1()][edge.getV2()] = 1;
+    adjacencyMatrix[e.getV1()][e.getV2()] = 1;
     Graph::totalEdges++;
     return true;
 }
         
-bool Graph::remove(const Edge &edge){
-    if( edge.getV1() >= numeroDeVertices
-        || edge.getV1() >= numeroDeVertices
-        || edge.getV1() == edge.getV2()  
-        || adjacencyMatrix[edge.getV1(), edge.getV2()] == 0){
+bool Graph::remove(const Edge &e){
+    if(e.getV1() >= numeroDeVertices
+        || e.getV1() >= numeroDeVertices
+        || e.getV1() == e.getV2() 
+        || ! edge(e)){
         return false;
     }
-    adjacencyMatrix[edge.getV1()][edge.getV2()] = 0;
+    adjacencyMatrix[e.getV1()][e.getV2()] = 0;
     Graph::totalEdges--;
     return true;
 }
 
-int Graph::getTotalEdges(){
+int Graph::getTotalArestas(){
     return Graph::totalEdges;
 };
 
+int Graph::getTotalVertices(){
+    return Graph::totalEdges * 2;
+};
+
 bool Graph::edge(const Edge &edge) const{
-    return false;
+    int *arr = adjacencyMatrix[edge.getV1()];
+    int value = arr[edge.getV2()];
+    return value == 1;
 };
 
 bool Graph::isComplete(){
@@ -93,7 +99,8 @@ void Graph::printAdjacencyMatrix() const{
     }
 
     std::cout << std::endl << std::endl;
-    std::cout << "Número de arestas: " << Graph::getTotalEdges << std::endl;
+    std::cout << "Número de arestas : " << Graph::getTotalArestas() << std::endl;
+    std::cout << "Número de vértices: " << Graph::getTotalVertices() << std::endl;
     std::cout << std::endl << std::endl;
 
 }
