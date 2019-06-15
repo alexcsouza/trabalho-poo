@@ -58,16 +58,34 @@ int Graph::getTotalVertices(){
 
 bool Graph::edge(const Edge &edge) const{
     int *arr = adjacencyMatrix[edge.getV1()];
-    int value = arr[edge.getV2()];
-    return value == 1;
+    return arr[edge.getV2()] == 1;
 };
 
-bool Graph::isComplete(){
-    return false;
+bool Graph::isComplete() const{
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+        for(int j = 0 ; j < numeroDeVertices ; j++){
+            if(i==j){
+                continue;
+            }
+            if(!edge(Edge(i,j))){
+                return false;
+            }
+        }
+    }
+    return true;
 };
         
 void Graph::complete(){
-
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+        for(int j = 0 ; j < numeroDeVertices ; j++){
+            if(i==j){
+                continue;
+            }
+            if(!edge(Edge(i,j))){
+                insert(Edge(i, j));
+            }
+        }
+    }
 };
 
 void Graph::bfs(const Vertex &edge) const{
@@ -101,7 +119,8 @@ void Graph::printAdjacencyMatrix() const{
     std::cout << std::endl << std::endl;
     std::cout << "Número de arestas : " << Graph::getTotalArestas() << std::endl;
     std::cout << "Número de vértices: " << Graph::getTotalVertices() << std::endl;
-    std::cout << std::endl << std::endl;
+    std::cout << "Matriz completa   : " << (isComplete()?"sim":"não") << std::endl;
+    std::cout << std::endl;
 
 }
     

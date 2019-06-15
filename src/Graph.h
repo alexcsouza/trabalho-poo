@@ -25,7 +25,7 @@ class Graph{
         static int getTotalArestas();
         static int getTotalVertices();
         bool edge(const Edge &edge) const;
-        bool isComplete();
+        bool isComplete() const;
         void complete();
         void bfs(const Vertex &vertex) const;
         void dfs(const Vertex &vertex) const;

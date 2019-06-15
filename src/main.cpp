@@ -16,9 +16,13 @@ int main(void) {
     Graph graph = Graph(numeroDeVertices);
     inserirEdges(graph);    
     removerEdges(graph);
+    graph.printAdjacencyMatrix();
 
+    graph.complete();
     graph.printAdjacencyMatrix();
     
+
+
     return 0;
 }
 
