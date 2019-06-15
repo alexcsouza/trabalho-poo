@@ -14,8 +14,7 @@
  */
 class Graph{
     private:
-        const int numeroDeVerticesX;
-        const int numeroDeVerticesY;
+        const int numeroDeVertices;
         int **adjacencyMatrix;
         
     public:
@@ -23,7 +22,7 @@ class Graph{
         Graph(int &numeroDeVertices);
         bool insert(const Edge &edge);
         bool remove(const Edge &edge);
-        int getTotalEdges();
+        static int getTotalEdges();
         bool edge(const Edge &edge) const;
         bool isComplete();
         void complete();
