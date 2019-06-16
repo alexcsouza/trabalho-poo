@@ -5,6 +5,7 @@
 
 class Vertex{
     private:
+        char nome;
         
 };
 

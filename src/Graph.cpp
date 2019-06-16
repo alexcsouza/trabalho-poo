@@ -18,6 +18,8 @@ int Graph::totalEdges = 0;
 
 Graph::Graph(int &nv) :
     numeroDeVertices(nv){
+    visited = new bool[numeroDeVertices];
+    resetVisited();
     adjacencyMatrix = new int*[numeroDeVertices];
     for(int i = 0 ; i < numeroDeVertices ; i++){
         adjacencyMatrix[i] = new int[numeroDeVertices];
@@ -32,6 +34,8 @@ bool Graph::insert(const Edge &e){
         return false;
     }
     adjacencyMatrix[e.getV1()][e.getV2()] = 1;
+    adjacencyMatrix[e.getV2()][e.getV1()] = 1;
+    
     Graph::totalEdges++;
     return true;
 }
@@ -44,6 +48,8 @@ bool Graph::remove(const Edge &e){
         return false;
     }
     adjacencyMatrix[e.getV1()][e.getV2()] = 0;
+    adjacencyMatrix[e.getV2()][e.getV1()] = 0;
+
     Graph::totalEdges--;
     return true;
 }
@@ -53,7 +59,7 @@ int Graph::getTotalArestas(){
 };
 
 int Graph::getTotalVertices(){
-    return Graph::totalEdges * 2;
+    return numeroDeVertices;
 };
 
 bool Graph::edge(const Edge &edge) const{
@@ -88,13 +94,64 @@ void Graph::complete(){
     }
 };
 
-void Graph::bfs(const Vertex &edge) const{
-
+void Graph::bfs(const char &v) {
+    
 };
   
-void Graph::dfs(const Vertex &edge) const{
-
+void Graph::dfs(const char &v){
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+        int vertex = int(v - 65);
+        if(edge(Edge(vertex, i))){
+            std::cout << v;
+            performDfs((char)(i+65));
+            resetVisited();
+            std::cout << std::endl; 
+        }
+        
+    }
 };
+
+void Graph::performDfs(const char &v) {
+    
+    int vertex = int(v - 65);
+    if(visited[vertex]){
+        return;
+    }
+    std::cout << "->" << (char)(vertex+65);
+    visited[vertex] = true;
+    int *neighbours = adjacencyMatrix[vertex];
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+         
+        if(neighbours[i]==1){
+            //std::cout << "->" << (char)(i+65);
+            performDfs((char)(i+65));
+        }
+        //std::cout << std::endl; 
+        
+    }
+    
+};
+
+void Graph::resetVisited(){
+    lenghtOfPath = 0;
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+        visited[i] = false;
+    }
+}
+
+/**
+ * Método útil para dos vertices visitados nas buscas.
+ 
+void Graph::printVisited() const{
+    std::cout << std::endl;
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+        if(visited[i]){
+            std::cout << " -> " << ((char)(i+65)) ;
+        }
+    }
+    std::cout << std::endl;
+}
+*/
 
 /**
  * Método útil para impressão da matriz de adjacência em tela.
@@ -104,13 +161,13 @@ void Graph::printAdjacencyMatrix() const{
     std::cout << std::endl << std::endl;
     std::cout << "   ";
     for(int j = 0 ; j < numeroDeVertices ; j++){
-        std::cout << j << " ";
+        std::cout << ((char)(j+65)) << " ";
     }
     
     std::cout << std::endl;
     for(int i = 0 ; i < numeroDeVertices ; i++){
         std::cout << std::endl;
-        std::cout << i << "  ";
+        std::cout << ((char)(i+65)) << "  ";
         for(int j = 0 ; j < numeroDeVertices ; j++){
             std::cout << adjacencyMatrix[i][j] << " ";
         }
@@ -118,7 +175,7 @@ void Graph::printAdjacencyMatrix() const{
 
     std::cout << std::endl << std::endl;
     std::cout << "Número de arestas : " << Graph::getTotalArestas() << std::endl;
-    std::cout << "Número de vértices: " << Graph::getTotalVertices() << std::endl;
+    std::cout << "Número de vértices: " << numeroDeVertices << std::endl;
     std::cout << "Matriz completa   : " << (isComplete()?"sim":"não") << std::endl;
     std::cout << std::endl;
 

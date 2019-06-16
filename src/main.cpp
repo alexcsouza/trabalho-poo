@@ -5,7 +5,7 @@
 #include "Graph.cpp"
 #include "Edge.cpp"
 
-#define NUMERO_DE_VERTICES 5
+#define NUMERO_DE_VERTICES 10
 
 void inserirEdges(Graph &graph);
 void removerEdges(Graph &graph);
@@ -17,18 +17,34 @@ int main(void) {
     inserirEdges(graph);    
     removerEdges(graph);
     graph.printAdjacencyMatrix();
-
-    graph.complete();
-    graph.printAdjacencyMatrix();
+    graph.dfs('A');
+    
+    std::cout << std::endl;
+    graph.dfs('B');
     
 
+    std::cout << std::endl;
 
+    Graph graphCompleto = Graph(numeroDeVertices);
+    graphCompleto.complete();
+    graphCompleto.printAdjacencyMatrix();
+    graphCompleto.dfs('E');
+    
+    
+    std::cout << std::endl;
     return 0;
 }
 
 void inserirEdges(Graph &graph){
 
     int v1=0, v2=3; 
+    if(graph.insert(Edge(v1,v2))){
+        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+    }else{
+        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+    }
+
+    v1=3, v2=1; 
     if(graph.insert(Edge(v1,v2))){
         std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
     }else{
@@ -56,13 +72,14 @@ void inserirEdges(Graph &graph){
         std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
     }
 
+/* 
     v1=1, v2=2; 
     if(graph.insert(Edge(v1,v2))){
         std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
     }else{
         std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
     }
-
+*/
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
         std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
