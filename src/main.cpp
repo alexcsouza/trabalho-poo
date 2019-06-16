@@ -4,11 +4,16 @@
 #include <iostream>
 #include "Graph.cpp"
 #include "Edge.cpp"
+#include "CharUtil.cpp"
 
 #define NUMERO_DE_VERTICES 10
 
+/**
+ * Declarações de funções de controle do script.
+ */
 void inserirEdges(Graph &graph);
 void removerEdges(Graph &graph);
+void exibirDfs(Graph &graph);
 
 int main(void) {
     int numeroDeVertices = NUMERO_DE_VERTICES;
@@ -17,22 +22,23 @@ int main(void) {
     inserirEdges(graph);    
     removerEdges(graph);
     graph.printAdjacencyMatrix();
-    graph.dfs('A');
-    
-    std::cout << std::endl;
-    graph.dfs('B');
-    
+    exibirDfs(graph);    
 
     std::cout << std::endl;
 
     Graph graphCompleto = Graph(numeroDeVertices);
     graphCompleto.complete();
     graphCompleto.printAdjacencyMatrix();
-    graphCompleto.dfs('E');
-    
+    exibirDfs(graphCompleto);    
     
     std::cout << std::endl;
     return 0;
+}
+
+void exibirDfs(Graph &graph){
+    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
+        graph.dfs(CharUtil::toLetter(i));
+    }
 }
 
 void inserirEdges(Graph &graph){

@@ -5,6 +5,8 @@
 #include "Graph.h"
 #include "Edge.h"
 #include "Vertex.h"
+#include "CharUtil.h"
+
 
 /**
  * Classe que representa um grafo referente à tarefa:
@@ -99,35 +101,35 @@ void Graph::bfs(const char &v) {
 };
   
 void Graph::dfs(const char &v){
+    std::cout << std::endl <<"Caminhamentos de: " << v << std::endl << std::endl;
+    int count = 0;
     for(int i = 0 ; i < numeroDeVertices ; i++){
-        int vertex = int(v - 65);
+        int vertex = CharUtil::toInt(v);
+        visited[vertex] = true;
         if(edge(Edge(vertex, i))){
+            std::cout << (++count) << ". ";
             std::cout << v;
-            performDfs((char)(i+65));
+            performDfs(CharUtil::toLetter(i));
             resetVisited();
             std::cout << std::endl; 
         }
-        
     }
+    resetVisited();
 };
 
 void Graph::performDfs(const char &v) {
     
-    int vertex = int(v - 65);
+    int vertex = CharUtil::toInt(v);
     if(visited[vertex]){
         return;
     }
-    std::cout << "->" << (char)(vertex+65);
+    std::cout << "->" << intToLetter(vertex);
     visited[vertex] = true;
     int *neighbours = adjacencyMatrix[vertex];
     for(int i = 0 ; i < numeroDeVertices ; i++){
-         
         if(neighbours[i]==1){
-            //std::cout << "->" << (char)(i+65);
-            performDfs((char)(i+65));
+            performDfs(CharUtil::toLetter(i));
         }
-        //std::cout << std::endl; 
-        
     }
     
 };
@@ -140,34 +142,20 @@ void Graph::resetVisited(){
 }
 
 /**
- * Método útil para dos vertices visitados nas buscas.
- 
-void Graph::printVisited() const{
-    std::cout << std::endl;
-    for(int i = 0 ; i < numeroDeVertices ; i++){
-        if(visited[i]){
-            std::cout << " -> " << ((char)(i+65)) ;
-        }
-    }
-    std::cout << std::endl;
-}
-*/
-
-/**
- * Método útil para impressão da matriz de adjacência em tela.
+ * @see Graph::printAdjacencyMatrix
  */
 void Graph::printAdjacencyMatrix() const{
     
     std::cout << std::endl << std::endl;
     std::cout << "   ";
     for(int j = 0 ; j < numeroDeVertices ; j++){
-        std::cout << ((char)(j+65)) << " ";
+        std::cout << CharUtil::toLetter(j) << " ";
     }
     
     std::cout << std::endl;
     for(int i = 0 ; i < numeroDeVertices ; i++){
         std::cout << std::endl;
-        std::cout << ((char)(i+65)) << "  ";
+        std::cout << CharUtil::toLetter(i) << "  ";
         for(int j = 0 ; j < numeroDeVertices ; j++){
             std::cout << adjacencyMatrix[i][j] << " ";
         }
