@@ -7,15 +7,6 @@
 #include "Vertex.h"
 #include "CharUtil.h"
 
-
-/**
- * Classe que representa um grafo referente à tarefa:
- * "Crie uma classe para representar o conceito de
- * grafo (classe Graph), com vértices representados por números inteiros (índices dos
- * vértices). A classe Graph utilizará uma representação interna por matriz de adjacência."
- * 
- */
-
 int Graph::totalEdges = 0;
 
 Graph::Graph(int &nv) :
@@ -168,7 +159,10 @@ void Graph::printAdjacencyMatrix() const{
     std::cout << std::endl;
 
 }
-    
+
+/**
+ * @see Graph::~Graph()
+ */
 Graph::~Graph(){
 
 };
