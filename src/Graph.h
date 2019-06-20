@@ -2,10 +2,11 @@
 #define GRAPH_H
 
 #include <iostream>
+#include <queue>
 #include "Edge.h"
 #include "Vertex.h"
 
-#define intToLetter(i) (char)(i+65);
+using namespace std; 
 
 /**
  * Classe que representa um grafo referente à tarefa:
@@ -37,6 +38,8 @@ class Graph{
          */
         int lenghtOfPath;
 
+        queue<int> edgeQueue;
+
         /**
          * Efetua o cálculo da (Depth First Search – DFS)
          * 
@@ -48,6 +51,8 @@ class Graph{
          * 
          */        
         void performDfs(const char &vertex);
+
+        int * performBfs(const char &vertex);
         
         /**
          * Método auxiliar para limpar indicações de vertices visitados no cálculo de buscas (Depth First Search – DFS).
@@ -150,10 +155,10 @@ class Graph{
          *    caminhamento em largura a partir do vértice recebido como parâmetro. Este
          *    caminhamento deve ser feito apenas no componente do vértice inicial.
          * 
-         * @param char &vertex - o vértice a partir do qual se deseja calcular
+         * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
          * 
          */
-        void bfs(const char &vertex);
+        void bfs(const char &v1, const char &v2);
         
         /**
          * Efetua o cálculo da (Depth First Search – DFS) a partir de um vértice para todos os outros.
@@ -162,6 +167,8 @@ class Graph{
          *    deve receber o índice de um vértice e apresentar os índices dos vértices na ordem do
          *    caminhamento em profundidade a partir do vértice recebido como parâmetro. Este
          *    caminhamento deve ser feito em todos os componentes do grafo.
+         * 
+         * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
          * 
          */        
         void dfs(const char &vertex);
@@ -176,6 +183,7 @@ class Graph{
          *  
          * b) Um destrutor, que se incumbirá de fazer a desalocação de memória eventualmente
          *    utilizada na representação do grafo;
+         * 
          */
         ~Graph();
 

@@ -2,10 +2,13 @@
 #define GRAPH_CPP
 
 #include <iostream>
+#include <queue>
 #include "Graph.h"
 #include "Edge.h"
 #include "Vertex.h"
 #include "CharUtil.h"
+
+using namespace std; 
 
 int Graph::totalEdges = 0;
 
@@ -87,22 +90,74 @@ void Graph::complete(){
     }
 };
 
-void Graph::bfs(const char &v) {
-    
+void Graph::bfs(const char &vi, const char &vf) {
+    cout << endl <<"Caminhamentos BFS de: " << vi << " até " << vf << endl << endl;
+    cout << vi;
+    //int count = 0;
+    //for(int i = 0 ; i < numeroDeVertices ; i++){
+    //    int vertex = CharUtil::toInt(v);
+        int *path = performBfs(vi);
+        int count = 0;
+        for(int i = 0  ; i < numeroDeVertices ; i++){
+            if(path[i] == NULL){
+                break;
+            }
+            cout << "->" << CharUtil::toLetter(path[i]);
+            count++;
+        }
+        for(int i = count  ; i > 0  ; i--){
+            cout << "->" << CharUtil::toLetter(path[i]);
+
+        }
+
+
+        resetVisited();
+        cout << endl << endl; 
+    //}
 };
+
+int * Graph::performBfs(const char &v){
+    
+    int vertex = CharUtil::toInt(v);
+    
+    edgeQueue = queue<int>();
+    edgeQueue.push(vertex);
+
+    visited[vertex] = true;
+    int *path = new int{numeroDeVertices};
+
+    while( ! edgeQueue.empty()){
+        int node = edgeQueue.front();
+        edgeQueue.pop();
+        int *neighbours = adjacencyMatrix[vertex];
+        for(int i = 0 ; i < numeroDeVertices ; i++){
+            if( ! visited[i] && edge(Edge(i, node))){
+                //if(neighbours[i] == 1){
+                    edgeQueue.push(i);
+                    visited[i] = true;
+                    cout << "->" << CharUtil::toLetter(i)<< " - "<< CharUtil::toLetter(node) <<endl;
+                    //performBfs(CharUtil::toLetter(i));
+                    path[i] = node;
+                //}
+            }
+        }
+        
+    }
+    return path;
+}
   
 void Graph::dfs(const char &v){
-    std::cout << std::endl <<"Caminhamentos de: " << v << std::endl << std::endl;
+    cout << endl <<"Caminhamentos DFS de: " << v << endl << endl;
     int count = 0;
     for(int i = 0 ; i < numeroDeVertices ; i++){
         int vertex = CharUtil::toInt(v);
         visited[vertex] = true;
         if(edge(Edge(vertex, i))){
-            std::cout << (++count) << ". ";
-            std::cout << v;
+            cout << (++count) << ". ";
+            cout << v;
             performDfs(CharUtil::toLetter(i));
             resetVisited();
-            std::cout << std::endl; 
+            cout << endl; 
         }
     }
     resetVisited();
@@ -114,7 +169,7 @@ void Graph::performDfs(const char &v) {
     if(visited[vertex]){
         return;
     }
-    std::cout << "->" << intToLetter(vertex);
+    cout << "->" << CharUtil::toLetter(vertex);
     visited[vertex] = true;
     int *neighbours = adjacencyMatrix[vertex];
     for(int i = 0 ; i < numeroDeVertices ; i++){
@@ -137,26 +192,26 @@ void Graph::resetVisited(){
  */
 void Graph::printAdjacencyMatrix() const{
     
-    std::cout << std::endl << std::endl;
-    std::cout << "   ";
+    cout << endl << endl;
+    cout << "   ";
     for(int j = 0 ; j < numeroDeVertices ; j++){
-        std::cout << CharUtil::toLetter(j) << " ";
+        cout << CharUtil::toLetter(j) << " ";
     }
     
-    std::cout << std::endl;
+    cout << endl;
     for(int i = 0 ; i < numeroDeVertices ; i++){
-        std::cout << std::endl;
-        std::cout << CharUtil::toLetter(i) << "  ";
+        cout << endl;
+        cout << CharUtil::toLetter(i) << "  ";
         for(int j = 0 ; j < numeroDeVertices ; j++){
-            std::cout << adjacencyMatrix[i][j] << " ";
+            cout << adjacencyMatrix[i][j] << " ";
         }
     }
 
-    std::cout << std::endl << std::endl;
-    std::cout << "Número de arestas : " << Graph::getTotalArestas() << std::endl;
-    std::cout << "Número de vértices: " << numeroDeVertices << std::endl;
-    std::cout << "Matriz completa   : " << (isComplete()?"sim":"não") << std::endl;
-    std::cout << std::endl;
+    cout << endl << endl;
+    cout << "Número de arestas : " << Graph::getTotalArestas() << endl;
+    cout << "Número de vértices: " << numeroDeVertices << endl;
+    cout << "Matriz completa   : " << (isComplete()?"sim":"não") << endl;
+    cout << endl;
 
 }
 
@@ -164,8 +219,7 @@ void Graph::printAdjacencyMatrix() const{
  * @see Graph::~Graph()
  */
 Graph::~Graph(){
-
+    //delete &edgeQueue;
 };
-
 
 #endif

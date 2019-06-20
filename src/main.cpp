@@ -8,11 +8,14 @@
 
 #define NUMERO_DE_VERTICES 10
 
+using namespace std; 
+
 /**
  * Declarações de funções de controle do script.
  */
 void inserirEdges(Graph &graph);
 void removerEdges(Graph &graph);
+void exibirBfs(Graph &graph);
 void exibirDfs(Graph &graph);
 
 int main(void) {
@@ -22,17 +25,27 @@ int main(void) {
     inserirEdges(graph);    
     removerEdges(graph);
     graph.printAdjacencyMatrix();
+    exibirBfs(graph);    
     exibirDfs(graph);    
-
-    std::cout << std::endl;
+    
+    cout << endl;
 
     Graph graphCompleto = Graph(numeroDeVertices);
     graphCompleto.complete();
     graphCompleto.printAdjacencyMatrix();
+    exibirBfs(graphCompleto);    
     exibirDfs(graphCompleto);    
     
-    std::cout << std::endl;
+    cout << endl;
     return 0;
+}
+
+void exibirBfs(Graph &graph){
+    //for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
+        char vi = 'A';
+        char vf = 'E';
+        graph.bfs(vi, vf);
+    //}
 }
 
 void exibirDfs(Graph &graph){
@@ -45,59 +58,59 @@ void inserirEdges(Graph &graph){
 
     int v1=0, v2=3; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=3, v2=1; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=3, v2=4; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=2, v2=2; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=1, v2=4; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
 /* 
     v1=1, v2=2; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 */
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
-        std::cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
 }
@@ -106,16 +119,16 @@ void removerEdges(Graph &graph){
 
     int v1=3, v2=4; 
     if(graph.remove(Edge(v1,v2))){
-        std::cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=4, v2=2; 
     if(graph.remove(Edge(v1,v2))){
-        std::cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        std::cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << std::endl;
+        cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
 }
