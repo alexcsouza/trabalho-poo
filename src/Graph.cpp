@@ -90,59 +90,79 @@ void Graph::complete(){
     }
 };
 
+
 void Graph::bfs(const char &vi, const char &vf) {
     cout << endl <<"Caminhamentos BFS de: " << vi << " até " << vf << endl << endl;
-    cout << vi;
+    
     //int count = 0;
     //for(int i = 0 ; i < numeroDeVertices ; i++){
     //    int vertex = CharUtil::toInt(v);
-        int *path = performBfs(vi);
+        int *prev = performBfs(vi, vf);
+        /*
         int count = 0;
-        for(int i = 0  ; i < numeroDeVertices ; i++){
-            if(path[i] == NULL){
-                break;
+        for(int i = 0; i < numeroDeVertices ; i++){
+            if(prev[i] != NULL){
+                //cout << "->" << CharUtil::toLetter(prev[i]);
+                count++;
             }
-            cout << "->" << CharUtil::toLetter(path[i]);
-            count++;
         }
-        for(int i = count  ; i > 0  ; i--){
-            cout << "->" << CharUtil::toLetter(path[i]);
-
+        if( prev[count] != CharUtil::toInt(vf) ){
+            cout << endl <<"Não há caminhos de " << vi << " até " << vf << endl << endl;
+            delete prev;
+            return;
         }
-
+         */
+        cout << vi << flush;
+        for(int i = 0; i < numeroDeVertices ; i++){
+            if(prev[i] != NULL){
+                cout << "->" << CharUtil::toLetter(i);
+            }
+        }
 
         resetVisited();
         cout << endl << endl; 
+        
     //}
 };
 
-int * Graph::performBfs(const char &v){
+int * Graph::performBfs(const char &vi, const char &vf){
     
-    int vertex = CharUtil::toInt(v);
-    
+    int vertex = CharUtil::toInt(vi);
+    int finalVertex = CharUtil::toInt(vf);
     edgeQueue = queue<int>();
     edgeQueue.push(vertex);
 
     visited[vertex] = true;
-    int *path = new int{numeroDeVertices};
-
+    int *path = new int[numeroDeVertices];
+    for(int i = 0; i < numeroDeVertices ; i++){
+        path[i] = NULL;
+    }
+    
+    //int count = 0;
     while( ! edgeQueue.empty()){
         int node = edgeQueue.front();
         edgeQueue.pop();
-        int *neighbours = adjacencyMatrix[vertex];
+        int *neighbours = adjacencyMatrix[node];
         for(int i = 0 ; i < numeroDeVertices ; i++){
             if( ! visited[i] && edge(Edge(i, node))){
-                //if(neighbours[i] == 1){
-                    edgeQueue.push(i);
-                    visited[i] = true;
-                    cout << "->" << CharUtil::toLetter(i)<< " - "<< CharUtil::toLetter(node) <<endl;
-                    //performBfs(CharUtil::toLetter(i));
-                    path[i] = node;
-                //}
+
+                edgeQueue.push(i);
+                visited[i] = true;
+                path[i] = node;
+
+                cout << endl << endl << "prev[" << i << "] = " << CharUtil::toLetter(node) << endl << endl<<flush;
+                    
+                    //count++;
+
+             
+                    //if(node == finalVertex){
+                    //    return path;
+                    //}
+                
             }
         }
-        
     }
+    
     return path;
 }
   

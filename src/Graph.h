@@ -52,7 +52,7 @@ class Graph{
          */        
         void performDfs(const char &vertex);
 
-        int * performBfs(const char &vertex);
+        int * performBfs(const char &vi, const char &vf);
         
         /**
          * Método auxiliar para limpar indicações de vertices visitados no cálculo de buscas (Depth First Search – DFS).

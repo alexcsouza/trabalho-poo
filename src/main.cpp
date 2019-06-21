@@ -6,7 +6,7 @@
 #include "Edge.cpp"
 #include "CharUtil.cpp"
 
-#define NUMERO_DE_VERTICES 10
+#define NUMERO_DE_VERTICES 5
 
 using namespace std; 
 
@@ -41,11 +41,21 @@ int main(void) {
 }
 
 void exibirBfs(Graph &graph){
-    //for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
-        char vi = 'A';
-        char vf = 'E';
-        graph.bfs(vi, vf);
-    //}
+/*
+    char vi = CharUtil::toLetter(0);
+            char vf = CharUtil::toLetter(3);
+            graph.bfs(vi, vf);
+   */
+     
+    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
+        for(int j = 0 ; j < NUMERO_DE_VERTICES ; j++){
+            if(i==j) continue;
+            char vi = CharUtil::toLetter(i);
+            char vf = CharUtil::toLetter(j);
+            graph.bfs(vi, vf);
+        }
+    }
+    
 }
 
 void exibirDfs(Graph &graph){
@@ -91,14 +101,14 @@ void inserirEdges(Graph &graph){
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
-/* 
-    v1=1, v2=2; 
+ 
+    v1=3, v2=2; 
     if(graph.insert(Edge(v1,v2))){
         cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
-*/
+
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
         cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
