@@ -158,7 +158,7 @@ class Graph{
          * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
          * 
          */
-        void bfs(const char &v1, const char &v2);
+        void bfs(const char &v);
         
         /**
          * Efetua o cálculo da (Depth First Search – DFS) a partir de um vértice para todos os outros.

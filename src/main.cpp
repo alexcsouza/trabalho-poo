@@ -41,21 +41,9 @@ int main(void) {
 }
 
 void exibirBfs(Graph &graph){
-/*
-    char vi = CharUtil::toLetter(0);
-            char vf = CharUtil::toLetter(3);
-            graph.bfs(vi, vf);
-   */
-     
     for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
-        for(int j = 0 ; j < NUMERO_DE_VERTICES ; j++){
-            if(i==j) continue;
-            char vi = CharUtil::toLetter(i);
-            char vf = CharUtil::toLetter(j);
-            graph.bfs(vi, vf);
-        }
+        graph.bfs(CharUtil::toLetter(i));
     }
-    
 }
 
 void exibirDfs(Graph &graph){

@@ -16,6 +16,7 @@ Graph::Graph(int &nv) :
     numeroDeVertices(nv){
     visited = new bool[numeroDeVertices];
     resetVisited();
+
     adjacencyMatrix = new int*[numeroDeVertices];
     for(int i = 0 ; i < numeroDeVertices ; i++){
         adjacencyMatrix[i] = new int[numeroDeVertices];
@@ -90,39 +91,57 @@ void Graph::complete(){
     }
 };
 
+void Graph::bfs(const char &vi) {
+    cout << endl << "Caminhamentos BFS de: " << vi << endl << endl<< flush;
+    bool first = true;
+    int s = CharUtil::toInt(vi);
 
-void Graph::bfs(const char &vi, const char &vf) {
-    cout << endl <<"Caminhamentos BFS de: " << vi << " até " << vf << endl << endl;
-    
-    //int count = 0;
-    //for(int i = 0 ; i < numeroDeVertices ; i++){
-    //    int vertex = CharUtil::toInt(v);
-        int *prev = performBfs(vi, vf);
-        /*
-        int count = 0;
-        for(int i = 0; i < numeroDeVertices ; i++){
-            if(prev[i] != NULL){
-                //cout << "->" << CharUtil::toLetter(prev[i]);
-                count++;
-            }
+    // Mark all the vertices as not visited 
+    bool *visited = new bool[numeroDeVertices]; 
+    for(int i = 0; i < numeroDeVertices; i++){
+        visited[i] = false; 
+    }
+  
+    // Create a queue for BFS 
+    queue<int> queue; 
+  
+    // Mark the current node as visited and enqueue it 
+    visited[s] = true; 
+    queue.push(s); 
+  
+    // 'i' will be used to get all adjacent 
+    // vertices of a vertex 
+    //list<int>::iterator i; 
+  
+    while(!queue.empty()) 
+    { 
+        // Dequeue a vertex from queue and print it 
+        s = queue.front();
+        if(first){
+            first = false;
+        }else{
+            cout << "->" ;
         }
-        if( prev[count] != CharUtil::toInt(vf) ){
-            cout << endl <<"Não há caminhos de " << vi << " até " << vf << endl << endl;
-            delete prev;
-            return;
-        }
-         */
-        cout << vi << flush;
-        for(int i = 0; i < numeroDeVertices ; i++){
-            if(prev[i] != NULL){
-                cout << "->" << CharUtil::toLetter(i);
-            }
-        }
-
-        resetVisited();
-        cout << endl << endl; 
         
-    //}
+        cout << CharUtil::toLetter(s); 
+        queue.pop(); 
+  
+        // Get all adjacent vertices of the dequeued 
+        // vertex s. If a adjacent has not been visited,  
+        // then mark it visited and enqueue it 
+        //for (i = adj[s].begin(); i != adj[s].end(); ++i)
+        for(int i = 0 ; i < numeroDeVertices ; i++) 
+        { 
+            if (!visited[i] && edge(Edge(i, s))) 
+            { 
+                visited[i] = true; 
+                queue.push(i); 
+                s = i;
+            } 
+        } 
+    }
+    cout << endl << endl;
+ 
 };
 
 int * Graph::performBfs(const char &vi, const char &vf){
