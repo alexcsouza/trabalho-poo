@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <queue>
+#include <bits/stdc++.h>
 #include "Graph.h"
 #include "Edge.h"
 #include "Vertex.h"
@@ -30,8 +31,8 @@ bool Graph::insert(const Edge &e){
         || edge(e)){
         return false;
     }
-    adjacencyMatrix[e.getV1()][e.getV2()] = 1;
-    adjacencyMatrix[e.getV2()][e.getV1()] = 1;
+    adjacencyMatrix[e.getV1()][e.getV2()] = e.getWeight();
+    adjacencyMatrix[e.getV2()][e.getV1()] = e.getWeight();
     
     Graph::totalEdges++;
     return true;
@@ -150,19 +151,21 @@ void Graph::dfs(const char &v){
     resetVisited();
 };
 
-int Graph::performDfs(const char &v) {
+int Graph::performDfs(const char &v, const bool printOutput) {
     int count = 1;
     int vertex = CharUtil::toInt(v);
     if(visited[vertex]){
         return count;
     }
-    cout << "->" << CharUtil::toLetter(vertex);
+    if(printOutput){
+        cout << "->" << CharUtil::toLetter(vertex);
+    }
     count++;
     visited[vertex] = true;
     int *neighbours = adjacencyMatrix[vertex];
     for(int i = 0 ; i < numeroDeVertices ; i++){
         if(neighbours[i]==1){
-            count += performDfs(CharUtil::toLetter(i)) -1 ;
+            count += performDfs(CharUtil::toLetter(i), printOutput) -1 ;
         }
     }
     return count;
@@ -210,7 +213,7 @@ int Graph::getTotalConnections(){
             //int vertex = i;
             visited[i] = true;
             if(edge(Edge(i, j))){
-                count += performDfs(CharUtil::toLetter(j));
+                count += performDfs(CharUtil::toLetter(j), false);
                 //resetVisited();
             }
         }
@@ -221,6 +224,67 @@ int Graph::getTotalConnections(){
     resetVisited();
     return count;
 };
+
+int Graph::minKey(int key[], bool mstSet[])  
+{  
+    // Initialize min value  
+    int min = INT_MAX, min_index;  
+  
+    for (int i = 0; i < numeroDeVertices; i++){
+        if (mstSet[i] == false && key[i] < min) {
+            min = key[i];
+            min_index = i;  
+        }
+    }
+
+    return min_index;  
+}  
+
+void Graph::mst(){
+
+    cout << endl << "Árvore geradora mínima: " << endl << endl; 
+
+    int parent[numeroDeVertices];
+    int key[numeroDeVertices];  
+    bool mstSet[numeroDeVertices];  
+
+    for (int i = 0; i < numeroDeVertices; i++){
+        key[i] = INT_MAX, mstSet[i] = false;  
+    }
+  
+    key[0] = 0;  
+    parent[0] = -1;   
+  
+    for (int i = 0; i < numeroDeVertices - 1; i++){  
+        
+        int u = minKey(key, mstSet);  
+        mstSet[u] = true;  
+
+        for (int j = 0; j < numeroDeVertices; j++){
+            if (edge(Edge(u, j)) && mstSet[j] == false && adjacencyMatrix[u][j] < key[j]){
+                parent[j] = u;
+                key[j] = adjacencyMatrix[u][j];
+            }
+        }
+
+    }  
+  
+    cout << "Aresta \tPeso\n";  
+    for (int i = 1; i < numeroDeVertices; i++){  
+        if(parent[i] < 0 || adjacencyMatrix[i][parent[i]] == 0){
+            continue;
+        }
+        cout 
+            << CharUtil::toLetter(parent[i]) 
+            << " - " 
+            << CharUtil::toLetter(i) 
+            << " \t" 
+            << adjacencyMatrix[i][parent[i]]
+            << "\n";  
+    }
+    cout << endl;
+
+}
 
 /**
  * @see Graph::~Graph()

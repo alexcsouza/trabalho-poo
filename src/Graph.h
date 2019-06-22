@@ -50,13 +50,15 @@ class Graph{
          *    Função para retornar o número de componentes conectad
          * 
          */        
-        int performDfs(const char &vertex);
+        int performDfs(const char &vertex, const bool printOutput = true);
         
         /**
          * Método auxiliar para limpar indicações de vertices visitados no cálculo de buscas (Depth First Search – DFS).
          * 
          */
         void resetVisited();
+
+        int minKey(int key[], bool mstSet[]);
 
     public:
 
@@ -177,6 +179,8 @@ class Graph{
         void printAdjacencyMatrix() const;
 
         int getTotalConnections();
+
+        void mst();
 
         /**
          * Destrutor da classe.

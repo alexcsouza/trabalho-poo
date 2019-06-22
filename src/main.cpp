@@ -17,31 +17,36 @@ void inserirEdges(Graph &graph);
 void removerEdges(Graph &graph);
 void exibirBfs(Graph &graph);
 void exibirDfs(Graph &graph);
+void exibirMst(Graph &graph);
 
 int main(void) {
+
+    // O número de vértices é determinado pelo valor de NUMERO_DE_VERTICES para simplivicação do script
     int numeroDeVertices = NUMERO_DE_VERTICES;
 
+    // Grafo com arestas criadas uma a uma.
+    cout << " >> Efetuando teste de grafo com arestas diversas << " << endl << endl;
     Graph graph = Graph(numeroDeVertices);
     inserirEdges(graph);    
     removerEdges(graph);
     graph.printAdjacencyMatrix();
     exibirBfs(graph);    
     exibirDfs(graph);
-    int totalConnections = graph.getTotalConnections();
-    cout  << endl << endl << endl << "Total de conexões: " << totalConnections << endl << flush;
+    graph.mst();
+    cout << endl << endl << "Total de conexões: " << graph.getTotalConnections() << endl << endl << flush;
     
-    cout << endl;
-
+    // Grafo completo 
+    cout << " >> Efetuando teste de grafo completo << " << endl << endl;
     Graph graphCompleto = Graph(numeroDeVertices);
     graphCompleto.complete();
     graphCompleto.printAdjacencyMatrix();
     exibirBfs(graphCompleto);    
-    exibirDfs(graphCompleto);    
-    totalConnections = graph.getTotalConnections();
-    cout  << endl << "Total de conexões: " << totalConnections << endl << flush;
+    exibirDfs(graphCompleto);
+    graphCompleto.mst();
+    cout << endl << endl << "Total de conexões: " << graphCompleto.getTotalConnections() << endl << endl << flush;
     
-    cout << endl;
     return 0;
+
 }
 
 void exibirBfs(Graph &graph){
@@ -57,9 +62,10 @@ void exibirDfs(Graph &graph){
 }
 
 void inserirEdges(Graph &graph){
+    cout << "Criando arestas para teste do grafo: " << endl << endl;
 
-    int v1=0, v2=3; 
-    if(graph.insert(Edge(v1,v2))){
+    int v1=0, v2=3, weight=5; 
+    if(graph.insert(Edge(v1,v2,weight))){
         cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
@@ -86,20 +92,12 @@ void inserirEdges(Graph &graph){
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
-    v1=1, v2=4; 
-    if(graph.insert(Edge(v1,v2))){
+    v1=1, v2=4, weight=2; 
+    if(graph.insert(Edge(v1,v2, weight))){
         cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
-/* 
-    v1=3, v2=2; 
-    if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
-*/
 
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
@@ -107,7 +105,7 @@ void inserirEdges(Graph &graph){
     }else{
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
-
+    
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
         cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;

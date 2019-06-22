@@ -6,12 +6,16 @@
 
 class Edge{
     private:
-        int v1;
-        int v2;
+        const int v1;
+        const int v2;
+        const int weight = 1;
+        
     public: 
-        Edge(int &v1, int &v2);
+        Edge(const int &v1, const int &v2, const int &weight);
+        Edge(const int &v1, const int &v2);
         int getV1() const;
         int getV2() const;
+        int getWeight() const;
         ~Edge();
 };
 
