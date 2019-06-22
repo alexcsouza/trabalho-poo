@@ -61,7 +61,7 @@ int Graph::getTotalVertices(){
 
 bool Graph::edge(const Edge &edge) const{
     int *arr = adjacencyMatrix[edge.getV1()];
-    return arr[edge.getV2()] == 1;
+    return arr[edge.getV2()] != 0;
 };
 
 bool Graph::isComplete() const{
@@ -94,96 +94,43 @@ void Graph::complete(){
 void Graph::bfs(const char &vi) {
     cout << endl << "Caminhamentos BFS de: " << vi << endl << endl<< flush;
     bool first = true;
-    int s = CharUtil::toInt(vi);
+    int vertex = CharUtil::toInt(vi);
 
-    // Mark all the vertices as not visited 
     bool *visited = new bool[numeroDeVertices]; 
     for(int i = 0; i < numeroDeVertices; i++){
         visited[i] = false; 
     }
   
-    // Create a queue for BFS 
     queue<int> queue; 
   
-    // Mark the current node as visited and enqueue it 
-    visited[s] = true; 
-    queue.push(s); 
-  
-    // 'i' will be used to get all adjacent 
-    // vertices of a vertex 
-    //list<int>::iterator i; 
+    visited[vertex] = true; 
+    queue.push(vertex); 
   
     while(!queue.empty()) 
     { 
-        // Dequeue a vertex from queue and print it 
-        s = queue.front();
+        vertex = queue.front();
         if(first){
             first = false;
         }else{
             cout << "->" ;
         }
         
-        cout << CharUtil::toLetter(s); 
+        cout << CharUtil::toLetter(vertex); 
         queue.pop(); 
   
-        // Get all adjacent vertices of the dequeued 
-        // vertex s. If a adjacent has not been visited,  
-        // then mark it visited and enqueue it 
-        //for (i = adj[s].begin(); i != adj[s].end(); ++i)
         for(int i = 0 ; i < numeroDeVertices ; i++) 
         { 
-            if (!visited[i] && edge(Edge(i, s))) 
+            if (!visited[i] && edge(Edge(i, vertex))) 
             { 
                 visited[i] = true; 
                 queue.push(i); 
-                s = i;
+                vertex = i;
             } 
         } 
     }
     cout << endl << endl;
  
 };
-
-int * Graph::performBfs(const char &vi, const char &vf){
-    
-    int vertex = CharUtil::toInt(vi);
-    int finalVertex = CharUtil::toInt(vf);
-    edgeQueue = queue<int>();
-    edgeQueue.push(vertex);
-
-    visited[vertex] = true;
-    int *path = new int[numeroDeVertices];
-    for(int i = 0; i < numeroDeVertices ; i++){
-        path[i] = NULL;
-    }
-    
-    //int count = 0;
-    while( ! edgeQueue.empty()){
-        int node = edgeQueue.front();
-        edgeQueue.pop();
-        int *neighbours = adjacencyMatrix[node];
-        for(int i = 0 ; i < numeroDeVertices ; i++){
-            if( ! visited[i] && edge(Edge(i, node))){
-
-                edgeQueue.push(i);
-                visited[i] = true;
-                path[i] = node;
-
-                cout << endl << endl << "prev[" << i << "] = " << CharUtil::toLetter(node) << endl << endl<<flush;
-                    
-                    //count++;
-
-             
-                    //if(node == finalVertex){
-                    //    return path;
-                    //}
-                
-            }
-        }
-    }
-    
-    return path;
-}
   
 void Graph::dfs(const char &v){
     cout << endl <<"Caminhamentos DFS de: " << v << endl << endl;
@@ -194,29 +141,31 @@ void Graph::dfs(const char &v){
         if(edge(Edge(vertex, i))){
             cout << (++count) << ". ";
             cout << v;
-            performDfs(CharUtil::toLetter(i));
+            int count = performDfs(CharUtil::toLetter(i));
             resetVisited();
-            cout << endl; 
+            cout << " (" << count << " passos)" << endl; 
         }
     }
+    cout << endl;
     resetVisited();
 };
 
-void Graph::performDfs(const char &v) {
-    
+int Graph::performDfs(const char &v) {
+    int count = 1;
     int vertex = CharUtil::toInt(v);
     if(visited[vertex]){
-        return;
+        return count;
     }
     cout << "->" << CharUtil::toLetter(vertex);
+    count++;
     visited[vertex] = true;
     int *neighbours = adjacencyMatrix[vertex];
     for(int i = 0 ; i < numeroDeVertices ; i++){
         if(neighbours[i]==1){
-            performDfs(CharUtil::toLetter(i));
+            count += performDfs(CharUtil::toLetter(i)) -1 ;
         }
     }
-    
+    return count;
 };
 
 void Graph::resetVisited(){
@@ -253,6 +202,25 @@ void Graph::printAdjacencyMatrix() const{
     cout << endl;
 
 }
+
+int Graph::getTotalConnections(){
+    int count = 0;
+    for(int i = 0 ; i < numeroDeVertices ; i++){
+        for(int j = 0 ; j < numeroDeVertices ; j++){
+            //int vertex = i;
+            visited[i] = true;
+            if(edge(Edge(i, j))){
+                count += performDfs(CharUtil::toLetter(j));
+                //resetVisited();
+            }
+        }
+    }
+
+    cout.clear();
+
+    resetVisited();
+    return count;
+};
 
 /**
  * @see Graph::~Graph()

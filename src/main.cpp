@@ -26,7 +26,9 @@ int main(void) {
     removerEdges(graph);
     graph.printAdjacencyMatrix();
     exibirBfs(graph);    
-    exibirDfs(graph);    
+    exibirDfs(graph);
+    int totalConnections = graph.getTotalConnections();
+    cout  << endl << endl << endl << "Total de conexões: " << totalConnections << endl << flush;
     
     cout << endl;
 
@@ -35,6 +37,8 @@ int main(void) {
     graphCompleto.printAdjacencyMatrix();
     exibirBfs(graphCompleto);    
     exibirDfs(graphCompleto);    
+    totalConnections = graph.getTotalConnections();
+    cout  << endl << "Total de conexões: " << totalConnections << endl << flush;
     
     cout << endl;
     return 0;
@@ -88,14 +92,14 @@ void inserirEdges(Graph &graph){
     }else{
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
-
- 
+/* 
     v1=3, v2=2; 
     if(graph.insert(Edge(v1,v2))){
         cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
     }else{
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
+*/
 
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
