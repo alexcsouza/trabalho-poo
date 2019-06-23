@@ -184,6 +184,8 @@ class Graph{
 
         void dijkstra(const char &v);
 
+        void travellingSalesman(const char &vi);
+
         /**
          * Destrutor da classe.
          *  

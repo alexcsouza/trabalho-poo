@@ -15,12 +15,14 @@ using namespace std;
  */
 
 /**
- * Função que efetua a inclusão de algumas arestas para que seja feito um teste das diversas
+ * Função que efetua a inclusão de algumas arestas, por meio do método "Graph::insert", para que seja feito um teste das diversas
  * funcionalidades da classe "Graph". Especificamente, essa função efetua o teste da funcionalidade
  * de inclusão de arestas no grafo.
  * 
  */
 void inserirEdges(Graph &graph);
+
+void inserirEdgesCsv(Graph &graph);
 
 /**
  * Função utilitária que efetua a remoção de algumas arestas adicionadas anteriormente
@@ -43,6 +45,10 @@ void exibirDfs(Graph &graph);
 
 void exibirDijkstra(Graph &graph);
 
+void exibirTravellingSalesman(Graph &graph);
+
+int carregarNumeroDeVertices();
+
 int main(void) {
 
     // O número de vértices é determinado pelo valor de NUMERO_DE_VERTICES para simplivicação do script
@@ -57,8 +63,8 @@ int main(void) {
     exibirBfs(graph);    
     exibirDfs(graph);
     exibirDijkstra(graph);
+    exibirTravellingSalesman(graph);
     graph.mst();
-    
     
     cout << endl << endl << "Total de conexões: " << graph.getTotalConnections() << endl << endl << flush;
     
@@ -70,13 +76,26 @@ int main(void) {
     exibirBfs(graphCompleto);    
     exibirDfs(graphCompleto);
     exibirDijkstra(graphCompleto);
+    exibirTravellingSalesman(graphCompleto);
     graphCompleto.mst();
     cout << endl << endl << "Total de conexões: " << graphCompleto.getTotalConnections() << endl << endl << flush;
     
+    // Grafo com arestas carregadas de arquivo.
+    cout << " >> Efetuando teste de grafo com arestas carregadas de arquivo .csv << " << endl << endl;
+    numeroDeVertices = carregarNumeroDeVertices();
+    Graph graphCsv = Graph(numeroDeVertices);
+    inserirEdgesCsv(graphCsv);    
+    graphCsv.printAdjacencyMatrix();
+    exibirBfs(graphCsv);    
+    exibirDfs(graphCsv);
+    exibirDijkstra(graphCsv);
+    exibirTravellingSalesman(graphCsv);
+    graphCsv.mst();
+    cout << endl << endl << "Total de conexões: " << graphCsv.getTotalConnections() << endl << endl << flush;
+
     return 0;
 
 }
-
 
 void exibirBfs(Graph &graph){
     for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
@@ -93,6 +112,12 @@ void exibirDfs(Graph &graph){
 void exibirDijkstra(Graph &graph){
     for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
         graph.dijkstra(CharUtil::toLetter(i));
+    }
+}
+
+void exibirTravellingSalesman(Graph &graph){
+    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
+        graph.travellingSalesman(CharUtil::toLetter(i));
     }
 }
 
@@ -148,6 +173,55 @@ void inserirEdges(Graph &graph){
         cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
     }
 
+}
+
+int carregarNumeroDeVertices(){
+    cout << "Criando arestas para teste do grafo via arquivo .csv: " << endl << endl;
+
+    fstream file; 
+    file.open("data/vertex.csv", ios::in); 
+    string line;
+    getline(file, line);
+    stringstream ss( line );
+    string data;
+    getline( ss, data, '\n' );
+
+    return stoi(data);
+    
+}
+
+void inserirEdgesCsv(Graph &graph){
+    cout << "Criando arestas para teste do grafo via arquivo .csv: " << endl << endl;
+
+    fstream file; 
+    file.open("data/vertex.csv", ios::in); 
+    string line;
+    bool first = true;
+	while (getline(file, line)){
+        if(first){
+            first = false;
+            continue;
+        }
+
+        stringstream ss( line );
+        vector<string> row = vector<string>();
+        string data;
+        while ( getline( ss, data, ',' ) ){
+            row.push_back( data );
+        }
+
+        string v1 = row[0];
+        string v2 = row[1];
+        string weight = row[2];;
+
+        if(graph.insert(Edge(stoi(v1),stoi(v2),stoi(weight)))){
+            cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        }else{
+            cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        }
+
+    }
+    
 }
 
 void removerEdges(Graph &graph){

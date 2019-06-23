@@ -333,6 +333,62 @@ void Graph::dijkstra(const char &vi){
     }
 } 
 
+void Graph::travellingSalesman(const char &vi){ 
+    cout << endl << endl <<"Problema do caixeiro viajante a partir de " << vi << endl << endl;   
+    if( ! isComplete() ){
+        complete();
+    }
+    cout << "Matriz complementada: " << endl;   
+    printAdjacencyMatrix();
+    cout << vi;
+
+    int vertex = CharUtil::toInt(vi);
+    vector<int> ver = vector<int>(); 
+
+    for (int i = 0; i < numeroDeVertices; i++){
+        //if (i != vertex){
+            ver.push_back(i); 
+        //}
+    }
+  
+    int minPath = INT_MAX; 
+    do { 
+  
+        int currentPathweight = 0; 
+          
+        int k = vertex; 
+        for (int i = 0; i < ver.size(); i++) { 
+            currentPathweight += adjacencyMatrix[k][ver[i]]; 
+            k = ver[i]; 
+        } 
+        currentPathweight += adjacencyMatrix[k][vertex]; 
+  
+        minPath = min(minPath, currentPathweight); 
+
+        if(!visited[k]){
+            visited[k] = true;
+        }else{
+            //visited[k] = false;
+        }
+        /*
+        if(minPath == currentPathweight){
+            cout << "->" << CharUtil::toLetter(k) << flush;
+        }
+         */
+         
+    } while (next_permutation(ver.begin(), ver.end())); 
+  
+    for (int i = 0; i < numeroDeVertices; i++) { 
+        if(visited[i]){
+            cout << "->" << CharUtil::toLetter(i) << flush;
+        }
+    } 
+
+    cout << endl << "(Custo do percurso: " << minPath << ")" << endl << flush;
+    resetVisited();
+    
+} 
+
 /**
  * @see Graph::~Graph()
  */
