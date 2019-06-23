@@ -210,11 +210,9 @@ int Graph::getTotalConnections(){
     int count = 0;
     for(int i = 0 ; i < numeroDeVertices ; i++){
         for(int j = 0 ; j < numeroDeVertices ; j++){
-            //int vertex = i;
             visited[i] = true;
             if(edge(Edge(i, j))){
                 count += performDfs(CharUtil::toLetter(j), false);
-                //resetVisited();
             }
         }
     }
@@ -242,7 +240,7 @@ int Graph::minKey(int key[], bool mstSet[])
 
 void Graph::mst(){
 
-    cout << endl << "Árvore geradora mínima: " << endl << endl; 
+    cout << endl << endl << "Árvore geradora mínima: " << endl << endl; 
 
     int parent[numeroDeVertices];
     int key[numeroDeVertices];  
@@ -269,22 +267,71 @@ void Graph::mst(){
 
     }  
   
-    cout << "Aresta \tPeso\n";  
+    cout << "Aresta\t\tPeso\n";  
     for (int i = 1; i < numeroDeVertices; i++){  
         if(parent[i] < 0 || adjacencyMatrix[i][parent[i]] == 0){
             continue;
         }
         cout 
+            << "( "
             << CharUtil::toLetter(parent[i]) 
-            << " - " 
+            << ", " 
             << CharUtil::toLetter(i) 
-            << " \t" 
+            << " )"
+            << "\t" 
             << adjacencyMatrix[i][parent[i]]
             << "\n";  
     }
     cout << endl;
 
 }
+
+void Graph::dijkstra(const char &vi){
+    cout << endl << endl <<"Dijkstra de " << vi << endl << endl;   
+
+    int vertex = CharUtil::toInt(vi);
+    int dist[numeroDeVertices];
+    bool sptSet[numeroDeVertices];
+    
+    for (int i = 0; i < numeroDeVertices; i++){
+        dist[i] = INT_MAX;
+        sptSet[i] = false; 
+    }
+   
+    dist[vertex] = 0; 
+   
+    for (int count = 0; count < numeroDeVertices-1; count++){ 
+   
+        int min = INT_MAX;
+        int u; 
+   
+        for (int v = 0; v < numeroDeVertices; v++){
+            if (sptSet[v] == false && dist[v] <= min){
+                min = dist[v];
+                u = v;  
+            }
+        }
+
+       sptSet[u] = true; 
+   
+        for (int v = 0; v < numeroDeVertices; v++){
+            if ( ! sptSet[v] 
+                && adjacencyMatrix[u][v] 
+                && dist[u] != INT_MAX  
+                && dist[u] + adjacencyMatrix[u][v] < dist[v]){
+                dist[v] = dist[u] + adjacencyMatrix[u][v]; 
+            }
+        }
+    } 
+
+    cout << "Caminho\t\tCusto de percurso" << endl;
+    for (int i = 0; i < numeroDeVertices; i++){
+        if(i == vertex || dist[i] > 1000000 ){
+            continue;
+        }
+        cout << vi << "->" << CharUtil::toLetter(i) << "\t\t" << dist[i] << endl; 
+    }
+} 
 
 /**
  * @see Graph::~Graph()

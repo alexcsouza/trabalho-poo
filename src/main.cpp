@@ -13,11 +13,35 @@ using namespace std;
 /**
  * Declarações de funções de controle do script.
  */
+
+/**
+ * Função que efetua a inclusão de algumas arestas para que seja feito um teste das diversas
+ * funcionalidades da classe "Graph". Especificamente, essa função efetua o teste da funcionalidade
+ * de inclusão de arestas no grafo.
+ * 
+ */
 void inserirEdges(Graph &graph);
+
+/**
+ * Função utilitária que efetua a remoção de algumas arestas adicionadas anteriormente
+ * pela função "inserirEdges" para teste da funcionalidade de remoção, implementada na classe "Graph"
+ * 
+ */
 void removerEdges(Graph &graph);
+
+/**
+ * Função utilitária que efetua a BFS para todos os vértices do grafo.
+ * 
+ */
 void exibirBfs(Graph &graph);
+
+/**
+ * Função utilitária que efetua a DFS para todos os vértices do grafo.
+ * 
+ */
 void exibirDfs(Graph &graph);
-void exibirMst(Graph &graph);
+
+void exibirDijkstra(Graph &graph);
 
 int main(void) {
 
@@ -32,7 +56,10 @@ int main(void) {
     graph.printAdjacencyMatrix();
     exibirBfs(graph);    
     exibirDfs(graph);
+    exibirDijkstra(graph);
     graph.mst();
+    
+    
     cout << endl << endl << "Total de conexões: " << graph.getTotalConnections() << endl << endl << flush;
     
     // Grafo completo 
@@ -42,12 +69,14 @@ int main(void) {
     graphCompleto.printAdjacencyMatrix();
     exibirBfs(graphCompleto);    
     exibirDfs(graphCompleto);
+    exibirDijkstra(graphCompleto);
     graphCompleto.mst();
     cout << endl << endl << "Total de conexões: " << graphCompleto.getTotalConnections() << endl << endl << flush;
     
     return 0;
 
 }
+
 
 void exibirBfs(Graph &graph){
     for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
@@ -58,6 +87,12 @@ void exibirBfs(Graph &graph){
 void exibirDfs(Graph &graph){
     for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
         graph.dfs(CharUtil::toLetter(i));
+    }
+}
+
+void exibirDijkstra(Graph &graph){
+    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
+        graph.dijkstra(CharUtil::toLetter(i));
     }
 }
 

@@ -182,6 +182,8 @@ class Graph{
 
         void mst();
 
+        void dijkstra(const char &v);
+
         /**
          * Destrutor da classe.
          *  
