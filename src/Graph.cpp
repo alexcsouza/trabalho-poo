@@ -240,7 +240,7 @@ int Graph::minKey(int key[], bool mstSet[])
 
 void Graph::mst(){
 
-    cout << endl << endl << "Árvore geradora mínima: " << endl << endl; 
+    cout << endl << endl << " *** Árvore geradora mínima *** " << endl << endl; 
 
     int parent[numeroDeVertices];
     int key[numeroDeVertices];  
@@ -286,10 +286,17 @@ void Graph::mst(){
 
 }
 
-void Graph::dijkstra(const char &vi){
-    cout << endl << endl <<"Dijkstra de " << vi << endl << endl;   
+void Graph::dijkstra(const char &vi, const char &vf){
+
+    cout << endl << endl << " *** Dijkstra de " << vi << " até " << vf << " *** " << endl << endl;   
+
+    if(vi == vf){
+        cout << vi << endl << "Custo: 0" << endl << flush;    
+        return;
+    }
 
     int vertex = CharUtil::toInt(vi);
+    int finalVertex = CharUtil::toInt(vf);
     int dist[numeroDeVertices];
     bool sptSet[numeroDeVertices];
     
@@ -317,38 +324,54 @@ void Graph::dijkstra(const char &vi){
         for (int v = 0; v < numeroDeVertices; v++){
             if ( ! sptSet[v] 
                 && adjacencyMatrix[u][v] 
-                && dist[u] != INT_MAX  
+                && dist[u] != INT_MAX
                 && dist[u] + adjacencyMatrix[u][v] < dist[v]){
+                
                 dist[v] = dist[u] + adjacencyMatrix[u][v]; 
+                
             }
+
         }
+        
     } 
 
-    cout << "Caminho\t\tCusto de percurso" << endl;
+    int totalDist = 0;
+    bool reachEnd = false;
+    cout << vi << "(0)";
     for (int i = 0; i < numeroDeVertices; i++){
-        if(i == vertex || dist[i] > 1000000 ){
+        if(i == vertex || dist[i] == INT_MAX ){
             continue;
         }
-        cout << vi << "->" << CharUtil::toLetter(i) << "\t\t" << dist[i] << endl; 
+        cout << "->" << CharUtil::toLetter(i)<<"("<<dist[i] <<")";
+        totalDist += dist[i];
+        if(i == finalVertex){
+            reachEnd = true;
+            break;
+        } 
     }
+    if( ! reachEnd){
+        cout.clear();
+        cout  << endl << "[INFO] Não chega ao destino";
+    }
+    cout << endl << "Custo: " << totalDist << endl << flush;
+
 } 
 
 void Graph::travellingSalesman(const char &vi){ 
-    cout << endl << endl <<"Problema do caixeiro viajante a partir de " << vi << endl << endl;   
+    cout << endl << endl << " *** Caixeiro viajante de " << vi << " *** " << endl << endl;   
     if( ! isComplete() ){
+        cout << "[INFO] Completando a matriz de adjacência" << endl;
         complete();
     }
-    cout << "Matriz complementada: " << endl;   
-    printAdjacencyMatrix();
     cout << vi;
 
     int vertex = CharUtil::toInt(vi);
     vector<int> ver = vector<int>(); 
 
     for (int i = 0; i < numeroDeVertices; i++){
-        //if (i != vertex){
+        if (i != vertex){
             ver.push_back(i); 
-        //}
+        }
     }
   
     int minPath = INT_MAX; 
@@ -367,14 +390,7 @@ void Graph::travellingSalesman(const char &vi){
 
         if(!visited[k]){
             visited[k] = true;
-        }else{
-            //visited[k] = false;
         }
-        /*
-        if(minPath == currentPathweight){
-            cout << "->" << CharUtil::toLetter(k) << flush;
-        }
-         */
          
     } while (next_permutation(ver.begin(), ver.end())); 
   
@@ -384,7 +400,7 @@ void Graph::travellingSalesman(const char &vi){
         }
     } 
 
-    cout << endl << "(Custo do percurso: " << minPath << ")" << endl << flush;
+    cout << endl << "[INFO] Custo do percurso: " << minPath << endl << flush;
     resetVisited();
     
 } 

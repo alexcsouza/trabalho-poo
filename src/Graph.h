@@ -182,7 +182,7 @@ class Graph{
 
         void mst();
 
-        void dijkstra(const char &v);
+        void dijkstra(const char &vi, const char &vf);
 
         void travellingSalesman(const char &vi);
 

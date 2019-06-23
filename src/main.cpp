@@ -111,7 +111,9 @@ void exibirDfs(Graph &graph){
 
 void exibirDijkstra(Graph &graph){
     for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
-        graph.dijkstra(CharUtil::toLetter(i));
+        for(int j = 0 ; j < NUMERO_DE_VERTICES ; j++){
+            graph.dijkstra(CharUtil::toLetter(i), CharUtil::toLetter(j));
+        }
     }
 }
 

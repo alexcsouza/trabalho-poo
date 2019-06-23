@@ -1,255 +1,165 @@
 # Trabalho Programação Orientada a Objetos
- Alex Campbell e Souza
- Rafael
+ * 2017089014 - Alex Souza
+ * 2017001320 - Rafael Ribeiro
 
+
+## Sumário
+
+- [Introdução](#Introducao)
+- [Documentação](#Documentação)
+    - [Visão Geral](#VisaoGeral)
+    - [Requisitos](#Requisitos)
+- [Código Fonte](#CodigoFonte)
+    - [main.cpp](#maincpp)
+    - [Edge.h](#Edge.h)
+    - [Edge.cpp](#Edge.cpp)
+    - [Graph.h](#Graph.h)
+    - [Graph.cpp](#Graph.cpp)
+
+- [I/O](#i/o)
+    - [vertex.txt](#vertex.txt)
+    - [Saĩda do Console](#SaidaDoConsole)
+- [Referências](#Referências)
+
+
+<a name="Introducao"></a>
+## Introdução
+
+<a name="VisaoGeral"></a>
+### Visão Geral
  
- 
-Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
+Trabalho final da disciplina Programação Orientada a Objetos ministrado pela professora Raquel Mini no primeiro semestre de 2019. O software desenvolvido tem como objetivo, implementar técnicas comuns de manipulação e busca em grafos. Criado com base na pesquisa feita pelos alunos envolvidos, o software possui um script principal que efetua a demonstração das diversas funcionalidades solicitadas pelo enunciado, conforme descrito em cada ponto onde os requisitos foram atendidos. Cada um dos requisitos é listado a segir, no tópico [Requistos](#Requisitos):
 
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
+<a name="Requisitos"></a>
+## Requisitos
 
+> a) Um construtor, que receberá como parâmetro um inteiro indicando o número de
+> vértices do grafo;
+
+- [Resolução (a)](#ResolucaoA)
+
+> b) Um destrutor, que se incumbirá de fazer a desalocação de memória eventualmente
+> utilizada na representação do grafo;
+
+- [Resolução (b)](#ResolucaoB)
+
+
+> c) Função para inserir uma aresta no grafo: bool Graph::insert(const Edge&). A função
+> retornará true se a inserção ocorrer com sucesso e false caso a aresta que se está
+> tentando inserir já exista no grafo.
+
+- [Resolução (c)](#ResolucaoC)
+
+> d) Função para retirar uma aresta do grafo: bool Graph::remove(const Edge&). A função
+> retornará true se a remoção ocorrer com sucesso e false caso a aresta que se está
+> tentando remover não exista no grafo.
+
+- [Resolução (d)](#ResolucaoD)
+
+> e) Funções para buscar o número de vértices e o número de arestas do grafo. Para que a
+> função que retorna o número de arestas seja eficiente, é interessante que a classe
+> mantenha um atributo interno que faça esta contagem. O atributo deve ser atualizado
+> em todas as inserções e remoções de aresta que ocorrerem com sucesso;
+
+
+
+> f) Função para verificar a existência de uma aresta do grafo: bool Graph::edge(const
+> Edge&) const . A função retornará true se a aresta estiver presente no grafo e false em
+> caso contrário.
+
+> g) Função booleana para verificar se o grafo desenhado é completo.
+
+> h) Função para completar o grafo desenhado.
+
+> i) Função para realizar a busca em largura (Breadth First Search - BFS). Essa função deve
+> receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+> caminhamento em largura a partir do vértice recebido como parâmetro. Este
+> caminhamento deve ser feito apenas no componente do vértice inicial.
+
+> j) Função para realizar a busca em profundidade (Depth First Search – DFS). Essa função
+> deve receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+> caminhamento em profundidade a partir do vértice recebido como parâmetro. Este
+> caminhamento deve ser feito em todos os componentes do grafo.
+
+> k) Função para retornar o número de componentes conectados do grafo. A
+> determinação do número de componentes conectados pode ser feita usando busca
+> em profundidade no grafo.
+
+> l) Função para encontrar o menor caminho através do Algoritmo de Dijkstra. Essa função
+> deverá receber o índice do vértice inicial e final e retornar os vértices contidos no
+> menor caminho bem como o comprimento desse menor caminho.
+
+> m) Função para resolver o Problema do Caixeiro Viajante. Essa função deverá completar o
+> grafo caso o mesmo não seja completo.
+
+> n) Função para encontrar uma árvore geradora mínima de um grafo com peso nas
+> arestas.
+
+
+> Crie um programa que, utilizando a classe acima, leia em um arquivo o número de vértices
+> de um grafo, construa o grafo, e em seguida leia do mesmo arquivo pares de inteiros que
+> definem as arestas do grafo. As arestas lidas devem ser adicionadas ao grafo. Teste as
+> demais funções da interface da classe.
+
+
+<a name="CodigoFonte"></a>
 ##Código Fonte
-##main.cpp
+
+<a name="main.cpp"></a>
+### main.cpp
+
 ```c++
-#ifndef MAIN
-#define MAIN
-
-#include <iostream>
-#include "Graph.cpp"
-#include "Edge.cpp"
-#include "CharUtil.cpp"
-
-#define NUMERO_DE_VERTICES 5
-
-using namespace std; 
-
-/**
- * Declarações de funções de controle do script.
- */
-
-/**
- * Função que efetua a inclusão de algumas arestas para que seja feito um teste das diversas
- * funcionalidades da classe "Graph". Especificamente, essa função efetua o teste da funcionalidade
- * de inclusão de arestas no grafo.
- * 
- */
-void inserirEdges(Graph &graph);
-
-/**
- * Função utilitária que efetua a remoção de algumas arestas adicionadas anteriormente
- * pela função "inserirEdges" para teste da funcionalidade de remoção, implementada na classe "Graph"
- * 
- */
-void removerEdges(Graph &graph);
-
-/**
- * Função utilitária que efetua a BFS para todos os vértices do grafo.
- * 
- */
-void exibirBfs(Graph &graph);
-
-/**
- * Função utilitária que efetua a DFS para todos os vértices do grafo.
- * 
- */
-void exibirDfs(Graph &graph);
-
-void exibirDijkstra(Graph &graph);
-
-int main(void) {
-
-    // O número de vértices é determinado pelo valor de NUMERO_DE_VERTICES para simplivicação do script
-    int numeroDeVertices = NUMERO_DE_VERTICES;
-
-    // Grafo com arestas criadas uma a uma.
-    cout << " >> Efetuando teste de grafo com arestas diversas << " << endl << endl;
-    Graph graph = Graph(numeroDeVertices);
-    inserirEdges(graph);    
-    removerEdges(graph);
-    graph.printAdjacencyMatrix();
-    exibirBfs(graph);    
-    exibirDfs(graph);
-    exibirDijkstra(graph);
-    graph.mst();
-    char a = 'A';
-    graph.travellingSalesman(a);
-    
-    
-    cout << endl << endl << "Total de conexões: " << graph.getTotalConnections() << endl << endl << flush;
-    
-    // Grafo completo 
-    cout << " >> Efetuando teste de grafo completo << " << endl << endl;
-    Graph graphCompleto = Graph(numeroDeVertices);
-    graphCompleto.complete();
-    graphCompleto.printAdjacencyMatrix();
-    exibirBfs(graphCompleto);    
-    exibirDfs(graphCompleto);
-    exibirDijkstra(graphCompleto);
-    graphCompleto.mst();
-    cout << endl << endl << "Total de conexões: " << graphCompleto.getTotalConnections() << endl << endl << flush;
-    
-    return 0;
-
-}
 
 
-void exibirBfs(Graph &graph){
-    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
-        graph.bfs(CharUtil::toLetter(i));
-    }
-}
+```
+<a name="Edge.h"></a>
+### Edge.h
 
-void exibirDfs(Graph &graph){
-    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
-        graph.dfs(CharUtil::toLetter(i));
-    }
-}
+```c++
 
-void exibirDijkstra(Graph &graph){
-    for(int i = 0 ; i < NUMERO_DE_VERTICES ; i++){
-        graph.dijkstra(CharUtil::toLetter(i));
-    }
-}
 
-void inserirEdges(Graph &graph){
-    cout << "Criando arestas para teste do grafo: " << endl << endl;
+```
+<a name="Edge.cpp"></a>
+### Edge.cpp
 
-    int v1=0, v2=3, weight=5; 
-    if(graph.insert(Edge(v1,v2,weight))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
+```c++
 
-    v1=3, v2=1; 
-    if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
 
-    v1=3, v2=4; 
-    if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
+```
+<a name="Graph.h"></a>
+### Graph.h
 
-    v1=2, v2=2; 
-    if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
+```c++
 
-    v1=1, v2=4, weight=2; 
-    if(graph.insert(Edge(v1,v2, weight))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
 
-    v1=4, v2=3; 
-    if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
-    
-    v1=4, v2=3; 
-    if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
+```
+<a name="Graph.cpp"></a>
+### Graph.cpp
 
-}
+```c++
 
-void removerEdges(Graph &graph){
+```
 
-    int v1=3, v2=4; 
-    if(graph.remove(Edge(v1,v2))){
-        cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
+<a name="i/o"></a>
+## I/O
 
-    v1=4, v2=2; 
-    if(graph.remove(Edge(v1,v2))){
-        cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << endl;
-    }else{
-        cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << endl;
-    }
+<a name="vertex.txt"></a>
+### vertex.txt
 
-}
+```c++
 
-#endif
+```
+
+
+<a name="SaidaDoConsole"></a>
+### Saída do Console
+
+```c++
+
 ```
 
 
 
-  - Import a HTML file and watch it magically convert to Markdown
-  - Drag and drop images (requires your Dropbox account be linked)
-
-
-You can also:
-  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
-  - Drag and drop markdown and HTML files into Dillinger
-  - Export documents as Markdown, HTML and PDF
-
-Markdown is a lightweight markup language based on the formatting conventions that people naturally use in email.  As [John Gruber] writes on the [Markdown site][df1]
-
-> The overriding design goal for Markdown's
-> formatting syntax is to make it as readable
-> as possible. The idea is that a
-> Markdown-formatted document should be
-> publishable as-is, as plain text, without
-> looking like it's been marked up with tags
-> or formatting instructions.
-
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
-
-### Tech
-
-Dillinger uses a number of open source projects to work properly:
-
-* [AngularJS] - HTML enhanced for web apps!
-* [Ace Editor] - awesome web-based text editor
-* [markdown-it] - Markdown parser done right. Fast and easy to extend.
-* [Twitter Bootstrap] - great UI boilerplate for modern web apps
-* [node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework [@tjholowaychuk]
-* [Gulp] - the streaming build system
-* [Breakdance](http://breakdance.io) - HTML to Markdown converter
-* [jQuery] - duh
-
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
-
-### Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v4+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-```sh
-$ cd dillinger
-$ npm install -d
-$ node app
-```
-
-For production environments...
-
-```sh
-$ npm install --production
-$ NODE_ENV=production node app
-```
-
-### Plugins
-
-Dillinger is currently extended with the following plugins. Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
 | ------ | ------ |
@@ -261,99 +171,3 @@ Dillinger is currently extended with the following plugins. Instructions on how 
 | Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
 
 
-### Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantanously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-```sh
-$ node app
-```
-
-Second Tab:
-```sh
-$ gulp watch
-```
-
-(optional) Third:
-```sh
-$ karma test
-```
-#### Building for source
-For production release:
-```sh
-$ gulp build --prod
-```
-Generating pre-built zip archives for distribution:
-```sh
-$ gulp build dist --prod
-```
-### Docker
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
-
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
-This will create the dillinger image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart="always" <youruser>/dillinger:${package.json.version}
-```
-
-Verify the deployment by navigating to your server address in your preferred browser.
-
-```c++  
-127.0.0.1:8000
-```
-
-#### Kubernetes + Google Cloud
-
-See [KUBERNETES.md](https://github.com/joemccann/dillinger/blob/master/KUBERNETES.md)
-
-
-### Todos
-
- - Write MORE Tests
- - Add Night Mode
-
-License
-----
-
-MIT
-
-
-**Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
