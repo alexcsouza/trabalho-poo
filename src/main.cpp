@@ -7,6 +7,9 @@
 #include "CharUtil.cpp"
 
 #define NUMERO_DE_VERTICES 5
+#define NOME_DO_ARQUIVO_DE_DADOS "data/vertex.csv"
+#define MSG_ARESTA_ADICIONADA "Aresta adicionada com sucesso"
+#define MSG_ARESTA_REMOVIDA "Não foi possíve remover a aresta"
 
 using namespace std; 
 
@@ -43,12 +46,26 @@ void exibirBfs(Graph &graph);
  */
 void exibirDfs(Graph &graph);
 
+/**
+ * Função que efetuará o disparo dos cálculos do algoritmo de Dijkstra de todos, para todos os vértices.
+ */
 void exibirDijkstra(Graph &graph);
 
+/**
+ * Funcão que efetuará o cálculo do problema do caixeiro viajante a partir de todos os vértices.
+ */
 void exibirTravellingSalesman(Graph &graph);
 
+/**
+ * Função que carrega o número de vértices do arquivo NOME_DO_ARQUIVO_DE_DADOS
+ */
 int carregarNumeroDeVertices();
 
+
+/**
+ * No método main, todas as funcionalidades são testadas.
+ * 
+ */
 int main(void) {
 
     // O número de vértices é determinado pelo valor de NUMERO_DE_VERTICES para simplivicação do script
@@ -66,7 +83,7 @@ int main(void) {
     exibirTravellingSalesman(graph);
     graph.mst();
     
-    cout << endl << endl << "Total de conexões: " << graph.getTotalConnections() << endl << endl << flush;
+    cout << endl << "Total de conexoes: " << graph.getTotalConnections() << endl << endl << flush;
     
     // Grafo completo 
     cout << " >> Efetuando teste de grafo completo << " << endl << endl;
@@ -78,7 +95,7 @@ int main(void) {
     exibirDijkstra(graphCompleto);
     exibirTravellingSalesman(graphCompleto);
     graphCompleto.mst();
-    cout << endl << endl << "Total de conexões: " << graphCompleto.getTotalConnections() << endl << endl << flush;
+    cout << endl << "Total de conexões: " << graphCompleto.getTotalConnections() << endl << endl << flush;
     
     // Grafo com arestas carregadas de arquivo.
     cout << " >> Efetuando teste de grafo com arestas carregadas de arquivo .csv << " << endl << endl;
@@ -91,7 +108,7 @@ int main(void) {
     exibirDijkstra(graphCsv);
     exibirTravellingSalesman(graphCsv);
     graphCsv.mst();
-    cout << endl << endl << "Total de conexões: " << graphCsv.getTotalConnections() << endl << endl << flush;
+    cout << endl << "Total de conexões: " << graphCsv.getTotalConnections() << endl << endl << flush;
 
     return 0;
 
@@ -124,64 +141,64 @@ void exibirTravellingSalesman(Graph &graph){
 }
 
 void inserirEdges(Graph &graph){
-    cout << "Criando arestas para teste do grafo: " << endl << endl;
+    cout << " *** Criando arestas para teste do grafo *** " << endl << endl;
 
     int v1=0, v2=3, weight=5; 
     if(graph.insert(Edge(v1,v2,weight))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=3, v2=1; 
     if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=3, v2=4; 
     if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=2, v2=2; 
     if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=1, v2=4, weight=2; 
     if(graph.insert(Edge(v1,v2, weight))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
     
     v1=4, v2=3; 
     if(graph.insert(Edge(v1,v2))){
-        cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
 }
 
 int carregarNumeroDeVertices(){
-    cout << "Criando arestas para teste do grafo via arquivo .csv: " << endl << endl;
+    cout << " *** Criando arestas para teste do grafo via arquivo " << NOME_DO_ARQUIVO_DE_DADOS << " *** " << endl << endl;
 
     fstream file; 
-    file.open("data/vertex.csv", ios::in); 
+    file.open(NOME_DO_ARQUIVO_DE_DADOS, ios::in); 
     string line;
     getline(file, line);
     stringstream ss( line );
@@ -193,10 +210,10 @@ int carregarNumeroDeVertices(){
 }
 
 void inserirEdgesCsv(Graph &graph){
-    cout << "Criando arestas para teste do grafo via arquivo .csv: " << endl << endl;
+    cout << "Criando arestas para teste do grafo via arquivo " << NOME_DO_ARQUIVO_DE_DADOS << " *** " << endl << endl;
 
     fstream file; 
-    file.open("data/vertex.csv", ios::in); 
+    file.open(NOME_DO_ARQUIVO_DE_DADOS, ios::in); 
     string line;
     bool first = true;
 	while (getline(file, line)){
@@ -217,9 +234,9 @@ void inserirEdgesCsv(Graph &graph){
         string weight = row[2];;
 
         if(graph.insert(Edge(stoi(v1),stoi(v2),stoi(weight)))){
-            cout << "Aresta adicionada com sucesso (" << v1 << ", " << v2 << ")." << endl;
+            cout << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
         }else{
-            cout << "Não foi possível adicionar a aresta (" << v1 << ", " << v2 << ")." << endl;
+            cout << "" << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
         }
 
     }
@@ -230,16 +247,16 @@ void removerEdges(Graph &graph){
 
     int v1=3, v2=4; 
     if(graph.remove(Edge(v1,v2))){
-        cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << "-" << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "-" << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
     v1=4, v2=2; 
     if(graph.remove(Edge(v1,v2))){
-        cout << "Aresta removida com sucesso (" << v1 << ", " << v2 << ")." << endl;
+        cout << "- " << "-" << MSG_ARESTA_ADICIONADA << " (" << v1 << ", " << v2 << ")." << endl;
     }else{
-        cout << "Não foi possível remover a aresta (" << v1 << ", " << v2 << ")." << endl;
+        cout << "-" << MSG_ARESTA_REMOVIDA << " (" << v1 << ", " << v2 << ")." << endl;
     }
 
 }

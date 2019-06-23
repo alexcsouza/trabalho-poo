@@ -11,8 +11,31 @@
 
 using namespace std; 
 
+/**
+ * Classe que representa um grafo referente à tarefa:
+ * "Crie uma classe para representar o conceito de
+ * grafo (classe Graph), com vértices representados por números inteiros (índices dos
+ * vértices). A classe Graph utilizará uma representação interna por matriz de adjacência."
+ * 
+ * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
+ * @author 2017001320 - Rafael Ribeiro <raphaelribeiro@ufmg.br>
+ * 
+ * @see Graph.h
+ * 
+ * Obs: Os atributos estão documentados no arquivo .h, já os métodos,
+ * no arquivo .cpp
+ *  
+ */
 int Graph::totalEdges = 0;
 
+/**
+ * Construtor do grafo. Recebe um inteiro que será usado para determinar o tamanho da matriz de adjacência (quadrada).
+ * 
+ * a) Um construtor, que receberá como parâmetro um inteiro indicando o número de
+ *    vértices do grafo;
+ * 
+ * @param int &numeroDeVertices - O número de vértices do qual o grafo é composto.
+ */
 Graph::Graph(int &nv) :
     numeroDeVertices(nv){
     visited = new bool[numeroDeVertices];
@@ -24,6 +47,15 @@ Graph::Graph(int &nv) :
     }
 }
 
+/**
+ * Método que possibilita a inclusão de uma aresta entre dois vértices do grafo. Preencherá a matriz de adjacëncia.
+ * 
+ * c) Função para inserir uma aresta no grafo: bool Graph::insert(const Edge&). A função
+ *    retornará true se a inserção ocorrer com sucesso e false caso a aresta que se está
+ *    tentando inserir já exista no grafo.
+ * 
+ * @param Edge &edge - Uma instäncia de Edge que encapsula as informações de uma aresta a ser representada no grafo.
+ */
 bool Graph::insert(const Edge &e){
     if(e.getV1() >= numeroDeVertices
         || e.getV1() >= numeroDeVertices
@@ -38,6 +70,15 @@ bool Graph::insert(const Edge &e){
     return true;
 }
         
+/**
+ * Método que remove uma aresta definida anteriormente no grafo.
+ * 
+ * d) Função para retirar uma aresta do grafo: bool Graph::remove(const Edge&). A função
+ *    retornará true se a remoção ocorrer com sucesso e false caso a aresta que se está
+ *    tentando remover não exista no grafo.
+ * 
+ * @param Edge &edge - Uma instäncia de Edge que encapsula as informações de uma aresta a ser removida do grafo.
+ */
 bool Graph::remove(const Edge &e){
     if(e.getV1() >= numeroDeVertices
         || e.getV1() >= numeroDeVertices
@@ -52,19 +93,55 @@ bool Graph::remove(const Edge &e){
     return true;
 }
 
-int Graph::getTotalArestas(){
+/**
+ * Método estático que retornará o número total de arestas criadas em todos os grafos repersentados por esta classe (Graph).
+ * 
+ * e) Funções para buscar o número de vértices e o número de arestas do grafo. Para que a
+ *    função que retorna o número de arestas seja eficiente, é interessante que a classe
+ *    mantenha um atributo interno que faça esta contagem. O atributo deve ser atualizado
+ *    em todas as inserções e remoções de aresta que ocorrerem com sucesso;
+ * 
+ * @TODO: Revisar o método e o atributo não deveriam ser membros privados e não estáticos.
+ * 
+ */
+int Graph::getTotalEdges(){
     return Graph::totalEdges;
 };
 
-int Graph::getTotalVertices(){
+/**
+ * Método que fornece o número total de vértices do grafo.
+ *
+ * e) Funções para buscar o número de vértices e o número de arestas do grafo. Para que a
+ * função que retorna o número de arestas seja eficiente, é interessante que a classe
+ * mantenha um atributo interno que faça esta contagem. O atributo deve ser atualizado
+ * em todas as inserções e remoções de aresta que ocorrerem com sucesso;
+ * 
+ */
+int Graph::getTotalVertex(){
     return numeroDeVertices;
 };
 
+/**
+ * Método que indica se uma aresta existe no grafo.
+ *  
+ * f) Função para verificar a existência de uma aresta do grafo: bool Graph::edge(const
+ *    Edge&) const . A função retornará true se a aresta estiver presente no grafo e false em
+ *    caso contrário.
+ * 
+ * @param Edge &edge - Uma instäncia de Edge que encapsula as informações de uma aresta a ser removida do grafo.
+ * 
+ */
 bool Graph::edge(const Edge &edge) const{
     int *arr = adjacencyMatrix[edge.getV1()];
     return arr[edge.getV2()] != 0;
 };
 
+/**
+ * Método que indica se o grafo é completo (todos os vértices possuiem arestas entre si).
+ * 
+ * g) Função booleana para verificar se o grafo desenhado é completo.
+ * 
+ */
 bool Graph::isComplete() const{
     for(int i = 0 ; i < numeroDeVertices ; i++){
         for(int j = 0 ; j < numeroDeVertices ; j++){
@@ -78,7 +155,13 @@ bool Graph::isComplete() const{
     }
     return true;
 };
-        
+       
+/**
+ * Método que completa a matriz de adjacência adicionando arestas em todos os vertices para todos os outros.
+ * 
+ * h) Função para completar o grafo desenhado.
+ * 
+ */
 void Graph::complete(){
     for(int i = 0 ; i < numeroDeVertices ; i++){
         for(int j = 0 ; j < numeroDeVertices ; j++){
@@ -92,8 +175,21 @@ void Graph::complete(){
     }
 };
 
+
+/**
+ * Efetua o cálculo da (Breath First Search – BFS) a partir de um vértice para todos os outros. Imprime 
+ * todas as ligações do vértice fornecido como argumento.
+ * 
+ * i) Função para realizar a busca em largura (Breadth First Search - BFS). Essa função deve
+ *    receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+ *    caminhamento em largura a partir do vértice recebido como parâmetro. Este
+ *    caminhamento deve ser feito apenas no componente do vértice inicial.
+ * 
+ * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
+ * 
+ */
 void Graph::bfs(const char &vi) {
-    cout << endl << "Caminhamentos BFS de: " << vi << endl << endl<< flush;
+    cout << endl << " *** Caminhamentos BFS de: " << vi << " *** " << endl << endl<< flush;
     bool first = true;
     int vertex = CharUtil::toInt(vi);
 
@@ -132,9 +228,20 @@ void Graph::bfs(const char &vi) {
     cout << endl << endl;
  
 };
-  
+
+/**
+ * Efetua o cálculo da (Depth First Search – DFS) a partir de um vértice para todos os outros.
+ * 
+ * j) Função para realizar a busca em profundidade (Depth First Search – DFS). Essa função
+ *    deve receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+ *    caminhamento em profundidade a partir do vértice recebido como parâmetro. Este
+ *    caminhamento deve ser feito em todos os componentes do grafo.
+ * 
+ * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
+ * 
+ */        
 void Graph::dfs(const char &v){
-    cout << endl <<"Caminhamentos DFS de: " << v << endl << endl;
+    cout << endl <<" *** Caminhamentos DFS de: " << v << " *** " << endl << endl;
     int count = 0;
     for(int i = 0 ; i < numeroDeVertices ; i++){
         int vertex = CharUtil::toInt(v);
@@ -151,6 +258,16 @@ void Graph::dfs(const char &v){
     resetVisited();
 };
 
+/**
+ * Efetua o cálculo da (Depth First Search – DFS)
+ * 
+ * j) Função para realizar a busca em profundidade (Depth First Search – DFS). Essa função
+ *    deve receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+ *    caminhamento em profundidade a partir do vértice recebido como parâmetro. Este
+ *    caminhamento deve ser feito em todos os componentes do grafo.
+ *    Função para retornar o número de componentes conectad
+ * 
+ */        
 int Graph::performDfs(const char &v, const bool printOutput) {
     int count = 1;
     int vertex = CharUtil::toInt(v);
@@ -178,8 +295,10 @@ void Graph::resetVisited(){
     }
 }
 
+        
 /**
- * @see Graph::printAdjacencyMatrix
+ * Método útil para impressão da matriz de adjacência em tela para visualização dos valores
+ * 
  */
 void Graph::printAdjacencyMatrix() const{
     
@@ -199,13 +318,21 @@ void Graph::printAdjacencyMatrix() const{
     }
 
     cout << endl << endl;
-    cout << "Número de arestas : " << Graph::getTotalArestas() << endl;
-    cout << "Número de vértices: " << numeroDeVertices << endl;
+    cout << "Numero de arestas : " << Graph::getTotalEdges() << endl;
+    cout << "Numero de vertices: " << numeroDeVertices << endl;
     cout << "Matriz completa   : " << (isComplete()?"sim":"não") << endl;
     cout << endl;
 
 }
 
+/**
+ * Método que fornece o número total de conexões presentes no grafo:
+ * 
+ * k) Função para retornar o número de componentes conectados do grafo. A
+ *    determinação do número de componentes conectados pode ser feita usando busca
+ *    em profundidade no grafo.
+ * 
+ */
 int Graph::getTotalConnections(){
     int count = 0;
     for(int i = 0 ; i < numeroDeVertices ; i++){
@@ -223,24 +350,30 @@ int Graph::getTotalConnections(){
     return count;
 };
 
-int Graph::minKey(int key[], bool mstSet[])  
-{  
-    // Initialize min value  
+/**
+ * Método auxiliar que fornece o valor mínimo para a geração da árvore geradora mínima (MST)
+ */        
+int Graph::minKey(int key[], bool mstSet[]){  
     int min = INT_MAX, min_index;  
-  
     for (int i = 0; i < numeroDeVertices; i++){
         if (mstSet[i] == false && key[i] < min) {
             min = key[i];
             min_index = i;  
         }
     }
-
     return min_index;  
 }  
 
+/**
+ * Método que produz a árvore geradora mínima do grafo.
+ * 
+ * n) Função para encontrar uma árvore geradora mínima de um grafo com peso nas
+ *    arestas.
+ * 
+ */
 void Graph::mst(){
 
-    cout << endl << endl << " *** Árvore geradora mínima *** " << endl << endl; 
+    cout << endl << endl << " *** Arvore geradora minima *** " << endl << endl; 
 
     int parent[numeroDeVertices];
     int key[numeroDeVertices];  
@@ -286,9 +419,20 @@ void Graph::mst(){
 
 }
 
+/**
+ * Método que calcula o caminho pelo algoritmo de Dijkstra.
+ * 
+ * l) Função para encontrar o menor caminho através do Algoritmo de Dijkstra. Essa função
+ *    deverá receber o índice do vértice inicial e final e retornar os vértices contidos no
+ *    menor caminho bem como o comprimento desse menor caminho.
+ * 
+ * @param char &initialVertex - O vértice de partida para o cálculo.
+ * @param char &finalVertex - O vértice de destino.
+ * 
+ */
 void Graph::dijkstra(const char &vi, const char &vf){
 
-    cout << endl << endl << " *** Dijkstra de " << vi << " até " << vf << " *** " << endl << endl;   
+    cout << endl << endl << " *** Dijkstra de " << vi << " ate " << vf << " *** " << endl << endl;   
 
     if(vi == vf){
         cout << vi << endl << "Custo: 0" << endl << flush;    
@@ -351,12 +495,21 @@ void Graph::dijkstra(const char &vi, const char &vf){
     }
     if( ! reachEnd){
         cout.clear();
-        cout  << endl << "[INFO] Não chega ao destino";
+        cout  << endl << "[INFO] Nao chega ao destino";
     }
     cout << endl << "Custo: " << totalDist << endl << flush;
 
 } 
 
+/**
+ * Método que resolve o problema do caixeiro viajante.
+ * 
+ * m) Função para resolver o Problema do Caixeiro Viajante. Essa função deverá completar o
+ *    grafo caso o mesmo não seja completo.
+ * 
+ * @param char &vertex - O vértice de partida. 
+ * 
+ */
 void Graph::travellingSalesman(const char &vi){ 
     cout << endl << endl << " *** Caixeiro viajante de " << vi << " *** " << endl << endl;   
     if( ! isComplete() ){
@@ -406,10 +559,14 @@ void Graph::travellingSalesman(const char &vi){
 } 
 
 /**
- * @see Graph::~Graph()
+ * Destrutor da classe.
+ *  
+ * b) Um destrutor, que se incumbirá de fazer a desalocação de memória eventualmente
+ *    utilizada na representação do grafo;
+ * 
  */
 Graph::~Graph(){
-    //delete &edgeQueue;
+    
 };
 
 #endif
