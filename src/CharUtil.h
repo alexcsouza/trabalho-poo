@@ -2,7 +2,15 @@
 #define CHAR_UTIL_H
 
 #include <iostream>
-
+/**
+ * Classe utilitária que auxilia na conversão entre letras e números.
+ * 
+ * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
+ * @author 2017001320 - Rafael Ribeiro <raphaelribeiro@ufmg.br>
+ * 
+ * @see CharUtil.h
+ *  
+ */
 class CharUtil{
     public:
         /**

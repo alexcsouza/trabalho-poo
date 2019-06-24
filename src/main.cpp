@@ -25,6 +25,9 @@ using namespace std;
  */
 void inserirEdges(Graph &graph);
 
+/**
+ * Funcão que efetua a inclusão das arestas por meio do arquivo .csv
+ */
 void inserirEdgesCsv(Graph &graph);
 
 /**

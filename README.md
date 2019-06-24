@@ -1,25 +1,25 @@
 # Trabalho Programação Orientada a Objetos
  * 2017089014 - Alex Souza
- * 2017001320 - Rafael Ribeiro
+ * 2017001320 - Raphael Ribeiro
 
 
 ## Sumário
 
 - [Introdução](#Introducao)
-- [Documentação](#Documentação)
     - [Visão Geral](#VisaoGeral)
     - [Requisitos](#Requisitos)
 - [Código Fonte](#CodigoFonte)
     - [main.cpp](#maincpp)
-    - [Edge.h](#Edge.h)
-    - [Edge.cpp](#Edge.cpp)
-    - [Graph.h](#Graph.h)
-    - [Graph.cpp](#Graph.cpp)
-
-- [I/O](#i/o)
-    - [vertex.txt](#vertex.txt)
+    - [Edge.h](#Edge_h)
+    - [Edge.cpp](#Edge_cpp)
+    - [Graph.h](#Graph_h)
+    - [Graph.cpp](#Graph_cpp)
+    - [CharUtil.h](#CharUtil_h)
+    - [CharUtil.cpp](#CharUtil_cpp)
+- [I/O](#i_o)
+    - [vertex.txt](#vertex_txt)
     - [Saĩda do Console](#SaidaDoConsole)
-- [Referências](#Referências)
+- [Referências](#Referencias)
 
 
 <a name="Introducao"></a>
@@ -31,70 +31,258 @@
 Trabalho final da disciplina Programação Orientada a Objetos ministrado pela professora Raquel Mini no primeiro semestre de 2019. O software desenvolvido tem como objetivo, implementar técnicas comuns de manipulação e busca em grafos. Criado com base na pesquisa feita pelos alunos envolvidos, o software possui um script principal que efetua a demonstração das diversas funcionalidades solicitadas pelo enunciado, conforme descrito em cada ponto onde os requisitos foram atendidos. Cada um dos requisitos é listado a segir, no tópico [Requistos](#Requisitos):
 
 <a name="Requisitos"></a>
-## Requisitos
+### Requisitos
 
 > a) Um construtor, que receberá como parâmetro um inteiro indicando o número de
 > vértices do grafo;
 
-- [Resolução (a)](#ResolucaoA)
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Construtor do grafo. Recebe um inteiro que será usado para determinar o tamanho da matriz de adjacência (quadrada).
+ * 
+ * a) Um construtor, que receberá como parâmetro um inteiro indicando o número de
+ *    vértices do grafo;
+ * 
+ * @param int &numeroDeVertices - O número de vértices do qual o grafo é composto.
+ */
+```
 
 > b) Um destrutor, que se incumbirá de fazer a desalocação de memória eventualmente
 > utilizada na representação do grafo;
 
-- [Resolução (b)](#ResolucaoB)
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Destrutor da classe.
+ *  
+ * b) Um destrutor, que se incumbirá de fazer a desalocação de memória eventualmente
+ *    utilizada na representação do grafo;
+ * 
+ */
+```
+---
 
 
 > c) Função para inserir uma aresta no grafo: bool Graph::insert(const Edge&). A função
 > retornará true se a inserção ocorrer com sucesso e false caso a aresta que se está
 > tentando inserir já exista no grafo.
 
-- [Resolução (c)](#ResolucaoC)
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método que possibilita a inclusão de uma aresta entre dois vértices do grafo. Preencherá a matriz de adjacëncia.
+ * 
+ * c) Função para inserir uma aresta no grafo: bool Graph::insert(const Edge&). A função
+ *    retornará true se a inserção ocorrer com sucesso e false caso a aresta que se está
+ *    tentando inserir já exista no grafo.
+ * 
+ * @param Edge &edge - Uma instäncia de Edge que encapsula as informações de uma aresta a ser representada no grafo.
+ */
+```
+---
+
 
 > d) Função para retirar uma aresta do grafo: bool Graph::remove(const Edge&). A função
 > retornará true se a remoção ocorrer com sucesso e false caso a aresta que se está
 > tentando remover não exista no grafo.
 
-- [Resolução (d)](#ResolucaoD)
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método que remove uma aresta definida anteriormente no grafo.
+ * 
+ * d) Função para retirar uma aresta do grafo: bool Graph::remove(const Edge&). A função
+ *    retornará true se a remoção ocorrer com sucesso e false caso a aresta que se está
+ *    tentando remover não exista no grafo.
+ * 
+ * @param Edge &edge - Uma instäncia de Edge que encapsula as informações de uma aresta a ser removida do grafo.
+ */
+```
+---
+
 
 > e) Funções para buscar o número de vértices e o número de arestas do grafo. Para que a
 > função que retorna o número de arestas seja eficiente, é interessante que a classe
 > mantenha um atributo interno que faça esta contagem. O atributo deve ser atualizado
 > em todas as inserções e remoções de aresta que ocorrerem com sucesso;
 
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método estático que retornará o número total de arestas criadas em todos os grafos repersentados por esta classe (Graph).
+ * 
+ * e) Funções para buscar o número de vértices e o número de arestas do grafo. Para que a
+ *    função que retorna o número de arestas seja eficiente, é interessante que a classe
+ *    mantenha um atributo interno que faça esta contagem. O atributo deve ser atualizado
+ *    em todas as inserções e remoções de aresta que ocorrerem com sucesso;
+ * 
+ * @TODO: Revisar o método e o atributo não deveriam ser membros privados e não estáticos.
+ * 
+ */
+```
+---
 
 
 > f) Função para verificar a existência de uma aresta do grafo: bool Graph::edge(const
 > Edge&) const . A função retornará true se a aresta estiver presente no grafo e false em
 > caso contrário.
 
+
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método que indica se uma aresta existe no grafo.
+ *  
+ * f) Função para verificar a existência de uma aresta do grafo: bool Graph::edge(const
+ *    Edge&) const . A função retornará true se a aresta estiver presente no grafo e false em
+ *    caso contrário.
+ * 
+ * @param Edge &edge - Uma instäncia de Edge que encapsula as informações de uma aresta a ser removida do grafo.
+ * 
+ */
+```
+---
+
 > g) Função booleana para verificar se o grafo desenhado é completo.
 
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método que indica se o grafo é completo (todos os vértices possuiem arestas entre si).
+ * 
+ * g) Função booleana para verificar se o grafo desenhado é completo.
+ * 
+ */
+```
+---
+
 > h) Função para completar o grafo desenhado.
+
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```    
+/**
+ * Método que completa a matriz de adjacência adicionando arestas em todos os vertices para todos os outros.
+ * 
+ * h) Função para completar o grafo desenhado.
+ * 
+ */
+```
+---
 
 > i) Função para realizar a busca em largura (Breadth First Search - BFS). Essa função deve
 > receber o índice de um vértice e apresentar os índices dos vértices na ordem do
 > caminhamento em largura a partir do vértice recebido como parâmetro. Este
 > caminhamento deve ser feito apenas no componente do vértice inicial.
 
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```    
+/**
+ * Efetua o cálculo da (Breath First Search – BFS) a partir de um vértice para todos os outros. Imprime 
+ * todas as ligações do vértice fornecido como argumento.
+ * 
+ * i) Função para realizar a busca em largura (Breadth First Search - BFS). Essa função deve
+ *    receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+ *    caminhamento em largura a partir do vértice recebido como parâmetro. Este
+ *    caminhamento deve ser feito apenas no componente do vértice inicial.
+ * 
+ * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
+ * 
+ */
+```
+---
+
+
 > j) Função para realizar a busca em profundidade (Depth First Search – DFS). Essa função
 > deve receber o índice de um vértice e apresentar os índices dos vértices na ordem do
 > caminhamento em profundidade a partir do vértice recebido como parâmetro. Este
 > caminhamento deve ser feito em todos os componentes do grafo.
 
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```    
+/**
+ * Efetua o cálculo da (Depth First Search – DFS) a partir de um vértice para todos os outros.
+ * 
+ * j) Função para realizar a busca em profundidade (Depth First Search – DFS). Essa função
+ *    deve receber o índice de um vértice e apresentar os índices dos vértices na ordem do
+ *    caminhamento em profundidade a partir do vértice recebido como parâmetro. Este
+ *    caminhamento deve ser feito em todos os componentes do grafo.
+ * 
+ * @param char &vertex - o vértice a partir do qual se deseja efetuar a busca
+ * 
+ */   
+```
+---
+
+
 > k) Função para retornar o número de componentes conectados do grafo. A
 > determinação do número de componentes conectados pode ser feita usando busca
 > em profundidade no grafo.
+
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```    
+/**
+ * Método que fornece o número total de conexões presentes no grafo:
+ * 
+ * k) Função para retornar o número de componentes conectados do grafo. A
+ *    determinação do número de componentes conectados pode ser feita usando busca
+ *    em profundidade no grafo.
+ * 
+ */  
+```
+---
 
 > l) Função para encontrar o menor caminho através do Algoritmo de Dijkstra. Essa função
 > deverá receber o índice do vértice inicial e final e retornar os vértices contidos no
 > menor caminho bem como o comprimento desse menor caminho.
 
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```    
+/**
+ * Método que calcula o caminho pelo algoritmo de Dijkstra.
+ * 
+ * l) Função para encontrar o menor caminho através do Algoritmo de Dijkstra. Essa função
+ *    deverá receber o índice do vértice inicial e final e retornar os vértices contidos no
+ *    menor caminho bem como o comprimento desse menor caminho.
+ * 
+ * @param char &initialVertex - O vértice de partida para o cálculo.
+ * @param char &finalVertex - O vértice de destino.
+ * 
+ */
+```
+---
+
 > m) Função para resolver o Problema do Caixeiro Viajante. Essa função deverá completar o
 > grafo caso o mesmo não seja completo.
+
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método que resolve o problema do caixeiro viajante.
+ * 
+ * m) Função para resolver o Problema do Caixeiro Viajante. Essa função deverá completar o
+ *    grafo caso o mesmo não seja completo.
+ * 
+ * @param char &vertex - O vértice de partida. 
+ * 
+ */
+```
+---
 
 > n) Função para encontrar uma árvore geradora mínima de um grafo com peso nas
 > arestas.
 
+[Resolucão no arquivo Graph.cpp](#Graph_cpp)
+```
+/**
+ * Método que produz a árvore geradora mínima do grafo.
+ * 
+ * n) Função para encontrar uma árvore geradora mínima de um grafo com peso nas
+ *    arestas.
+ * 
+ */
+```
+---
 
 > Crie um programa que, utilizando a classe acima, leia em um arquivo o número de vértices
 > de um grafo, construa o grafo, e em seguida leia do mesmo arquivo pares de inteiros que
@@ -102,8 +290,18 @@ Trabalho final da disciplina Programação Orientada a Objetos ministrado pela p
 > demais funções da interface da classe.
 
 
+[Resolucão no arquivo main.cpp](#main_cpp)
+```
+/**
+ * Funcão que efetua a inclusão das arestas por meio do arquivo .csv
+ */
+```
+---
+
 <a name="CodigoFonte"></a>
 ##Código Fonte
+
+Abaixo, o código fonte de todos os arquivos gerados.
 
 <a name="main.cpp"></a>
 ### main.cpp
@@ -136,6 +334,9 @@ using namespace std;
  */
 void inserirEdges(Graph &graph);
 
+/**
+ * Funcão que efetua a inclusão das arestas por meio do arquivo .csv
+ */
 void inserirEdgesCsv(Graph &graph);
 
 /**
@@ -374,7 +575,7 @@ void removerEdges(Graph &graph){
 
 #endif
 ```
-<a name="Edge.h"></a>
+<a name="Edge_h"></a>
 ### Edge.h
 
 ```c++
@@ -389,7 +590,7 @@ void removerEdges(Graph &graph){
  * Classe que representa uma aresta no grafo.
  * 
  * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
- * @author 2017001320 - Rafael Ribeiro <raphaelribeiro@ufmg.br>
+ * @author 2017001320 - Raphael Ribeiro <raphaelribeiro@ufmg.br>
  * 
  * @see Edge.h
  * 
@@ -426,7 +627,7 @@ class Edge{
 #endif
 
 ```
-<a name="Edge.cpp"></a>
+<a name="Edge_cpp"></a>
 ### Edge.cpp
 
 ```c++
@@ -440,7 +641,7 @@ class Edge{
  * Classe que representa uma aresta no grafo.
  * 
  * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
- * @author 2017001320 - Rafael Ribeiro <raphaelribeiro@ufmg.br>
+ * @author 2017001320 - Raphael Ribeiro <raphaelribeiro@ufmg.br>
  * 
  * @see Edge.h
  * 
@@ -486,7 +687,7 @@ Edge::~Edge(){
 #endif
 
 ```
-<a name="Graph.h"></a>
+<a name="Graph_h"></a>
 ### Graph.h
 
 ```c++
@@ -507,7 +708,7 @@ using namespace std;
  * vértices). A classe Graph utilizará uma representação interna por matriz de adjacência."
  * 
  * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
- * @author 2017001320 - Rafael Ribeiro <raphaelribeiro@ufmg.br>
+ * @author 2017001320 - Raphael Ribeiro <raphaelribeiro@ufmg.br>
  * 
  * @see Graph.h
  * 
@@ -586,7 +787,7 @@ class Graph{
 
 #endif
 ```
-<a name="Graph.cpp"></a>
+<a name="Graph_cpp"></a>
 ### Graph.cpp
 
 ```c++
@@ -610,7 +811,7 @@ using namespace std;
  * vértices). A classe Graph utilizará uma representação interna por matriz de adjacência."
  * 
  * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
- * @author 2017001320 - Rafael Ribeiro <raphaelribeiro@ufmg.br>
+ * @author 2017001320 - Raphael Ribeiro <raphaelribeiro@ufmg.br>
  * 
  * @see Graph.h
  * 
@@ -619,6 +820,7 @@ using namespace std;
  *  
  */
 int Graph::totalEdges = 0;
+
 
 /**
  * Construtor do grafo. Recebe um inteiro que será usado para determinar o tamanho da matriz de adjacência (quadrada).
@@ -1165,11 +1367,11 @@ Graph::~Graph(){
 
 ```
 
-<a name="i/o"></a>
+<a name="i_o"></a>
 ## I/O
 Entradas e saídas do software.
 
-<a name="vertex.txt"></a>
+<a name="vertex_txt"></a>
 ### vertex.txt
 
 Arquivo que contém vértices a serem importados para uso no grafo. A primeira linha contém o tamanho do grafo (número de vértices). A partir da segunda linha, os valores das arestas são adicionados na orde: vértice 1, vértice 2 e peso.
@@ -2023,17 +2225,77 @@ Aresta          Peso
 ( A, I )        1
 ( A, J )        1
 ```
+<a name="CharUtil_h"></a>
+### CharUtil.h
+
+```c++
+#ifndef CHAR_UTIL_H
+#define CHAR_UTIL_H
+
+#include <iostream>
+
+/**
+ * Classe utilitária que auxilia na conversão entre letras e números.
+ * 
+ * @author 2017089014 - Alex Souza <alexdcesouza@gmail.com>
+ * @author 2017001320 - Raphael Ribeiro <raphaelribeiro@ufmg.br>
+ * 
+ * @see CharUtil.h
+ *  
+ */
+class CharUtil{
+    public:
+        /**
+         * Função utilitária que converte um inteiro em uma letra, maiúscula, 
+         * corespondente ao número, começando de A (0 = 'A', 1 = 'B', 2 = 'C', ...)
+         */
+        static char toLetter(const int &i);
+        
+        /**
+         * Função utilitária que converte um char em um inteiro considerando A como o primeiro inteiro.
+         * (0 = 'A', 1 = 'B', 2 = 'C', ...)
+         */
+        static int toInt(const char &c);
+};
+
+#endif
+```
+<a name="CharUtil_cpp"></a>
+### CharUtil.cpp
+
+```c++
+#ifndef CHAR_UTIL_CPP
+#define CHAR_UTIL_CPP
+
+#include <iostream>
+#include "CharUtil.h"
+
+using namespace std; 
+
+char CharUtil::toLetter(const int &i){
+    return ((char)(i+65));
+};
+
+int CharUtil::toInt(const char &c){
+    return int(c - 65);
+};
+
+#endif
+```
+
+<a name="Referencias"></a>
+## Referências
 
 
+| Info | Autor | Link |
+| ------ | ------ | ------- |
+| Graph Theory Playlist | Willian Fiset | [Playlist no Youtube](https://www.youtube.com/watch?v=eQA-m22wjTQ&list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P) |
+| Estruturas de dados para grafos | Paulo Feofiloff | [Link](https://www.ime.usp.br/~pf/algoritmos_para_grafos/aulas/graphdatastructs.html) |
+| Depth First Search - DFS | Willian Fiset | [Vídeo no Youtube](https://www.youtube.com/watch?v=7fujbpJ0LB4&list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P&index=3) |
+|Breadth First Search or BFS for a Graph|GeeksForGeeks (site, autor não identificado)|[Link](https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)|
+|Dijkstra’s shortest path algorithm - Greedy Algo-7 |  Ita_c, estenger (Nicknames, mais informações no link) | [Link]( https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/)|
+| Traveling Salesman Problem (TSP) Implementation | Nishant_Singh | [Link](https://www.geeksforgeeks.org/traveling-salesman-problem-tsp-implementation/) | 
+|Prim’s Minimum Spanning Tree (MST) - Greedy Algo-5 |  vt_m, AnkurKarmakar, udkumar249, GlitchFinder, rathbhupendra (Nicknames, mais informações no link) | [Link](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/) | 
 
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| Github | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
 
 
